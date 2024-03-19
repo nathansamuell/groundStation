@@ -1,12 +1,14 @@
-#groundStation
+# groundStation
 
 A repository for AIAA-UH Ground station code.
 
 
-#Installation:
+## Installation:
+
+### App
 git clone https://github.com/nathansamuell/groundStation/
 
-Dependencies:
+### Dependencies
 
 Install python3 on your machine:
   -Homebrew (Mac) -- brew install python3
