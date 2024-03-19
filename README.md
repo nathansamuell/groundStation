@@ -3,17 +3,29 @@
 A repository for AIAA-UH Ground station code.
 
 
-## Installation:
+<br><br>
 
-### App
-git clone https://github.com/nathansamuell/groundStation/
+# Installation:
 
-### Dependencies
+## Install source code:
+```git clone https://github.com/nathansamuell/groundStation/```
 
-Install python3 on your machine:
-  -Homebrew (Mac) -- brew install python3
-  -Ubuntu -- sudo apt install python3
-  -Arch -- sudo pacman -S python3
+## If installing on Development Machine:
 
-Install PyQT5:
-pipx pyqt5 (will install to a virtual environment for you in the folder)
+### Setup and Start Python Virtual Environment
+```python3 -m venv venv```
+```source bin/venv/activate```
+
+
+### Install Dependencies:
+```pip3 install pyqt5```
+
+
+
+## If installing on Running Machine
+
+## Install source code:
+```git clone https://github.com/nathansamuell/groundStation/```
+
+### Install Dependencies:
+```pip3 install pyqt5```
