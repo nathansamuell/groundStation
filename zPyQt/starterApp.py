@@ -2,7 +2,7 @@
 
 
 # imports
-from PyQt5.QtWidgets import QApplication, QWidget # basic PyQT imports
+from PyQt5.QtWidgets import QApplication, QMainWindow # basic PyQT imports
 import sys # used for command line arguments (yes please!)
 
 # You need one (and only one) QApplication instance per application.
@@ -14,7 +14,7 @@ import sys # used for command line arguments (yes please!)
 # here's our ONE QApp instance -- see above for no CLI arguments^
 app = QApplication(sys.argv)
 
-window = QWidget() # windows in PyQT are widgets!
+window = QMainWindow() # windows in PyQT are widgets!
 window.show() # MUST be specified -- windows are shown by default
 
 app.exec() # starts your execution loop
