@@ -23,6 +23,7 @@ class MainWindow(QMainWindow):
     def the_button_was_clicked(self):
         self.button.setText("You already clicked me.")
         self.button.setEnabled(False)
+        self.setWindowTitle("New Window Title!")
 
     def the_button_was_toggled(self, checked):
         self.button_is_checked = checked
