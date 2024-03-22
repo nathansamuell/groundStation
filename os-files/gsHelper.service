@@ -1,0 +1,9 @@
+[Unit]
+Description=Runs Ground Station
+Requires=airData.service
+
+[Service]
+ExecStart= [PATH TO EXECUTABLE SCRIPT]
+type=oneshot
+
+[Install]
