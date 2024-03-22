@@ -4,5 +4,5 @@ After=multi-user.target
 Before=startApp.service
 
 [Service]
-ExecStart=/root/home/groundStation/os-files/airData.sh
+ExecStart=/home/natensamul/groundStation/os-files/airData.sh
 Type=simple
