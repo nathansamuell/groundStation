@@ -3,7 +3,7 @@ Description=Runs Ground Station
 Requires=airData.service
 
 [Service]
-ExecStart=~/groundStation/os-files/gsHelper.sh
+ExecStart=/home/natensamul/groundStation/os-files/gsHelper.sh
 type=oneshot
 
 [Install]
