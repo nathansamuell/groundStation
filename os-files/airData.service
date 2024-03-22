@@ -4,7 +4,5 @@ After=multi-user.target
 Before=startApp.service
 
 [Service]
-ExecStart= [ENTER LOCATION OF EXECUTABLE SCRIPT HERE]
+ExecStart=~/groundStation/os-files/airData.sh
 Type=simple
-
-[Install]
