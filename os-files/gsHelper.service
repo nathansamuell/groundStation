@@ -4,7 +4,7 @@ Requires=airData.service
 
 [Service]
 ExecStart=/home/natensamul/groundStation/os-files/gsHelper.sh
-type=oneshot
+Type=oneshot
 
 [Install]
 WantedBy=multi-user.target
