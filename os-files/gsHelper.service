@@ -7,3 +7,4 @@ ExecStart=~/groundStation/os-files/gsHelper.sh
 type=oneshot
 
 [Install]
+WantedBy=multi-user.target
