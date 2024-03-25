@@ -20,8 +20,10 @@ class MainWindow(QMainWindow):
         self.timer.timeout.connect(self.refresh)
         self.setCentralWidget(self.button)
         self.setFixedSize(QSize(800,480))
+        # self.setWindowFlags(Qt.FramelessWindowHint)
 
     def startTest(self):
+            self.iterations = 0
             self.timer.start(50)
             # print("Changed window title!");
 
@@ -30,6 +32,11 @@ class MainWindow(QMainWindow):
             new_window_title = choice(list(self.window_titles.values()))
             self.setWindowTitle(new_window_title)
             self.iterations += 1
+
+    def keyPressEvent(self, event):
+            if event.key() == Qt.Key_Escape:
+                self.close()
+                print("Escape key pressed. Closing application.")
 
 
 app = QApplication(sys.argv)

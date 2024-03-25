@@ -17,7 +17,7 @@ class MainWindow(QMainWindow):
 
         # self.refreshWindowTitle = False
         self.button = QPushButton("Start Refresh Test")
-        self.setWindowTitle("Background Refresh Test")
+        # self.setWindowTitle("Background Refresh Test")
         self.button.clicked.connect(self.startTest)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.refresh)
@@ -42,8 +42,7 @@ class MainWindow(QMainWindow):
     def keyPressEvent(self, event):
             if event.key() == Qt.Key_Escape:
                 self.close()
-
-            print("Escape key pressed. Closing application.")
+                print("Escape key pressed. Closing application.")
 
 app = QApplication(sys.argv)
 
