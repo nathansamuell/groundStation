@@ -1,23 +1,37 @@
 from PyQt5.QtCore import QSize, Qt, QTimer
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QLabel
+from PyQt5.QtWidgets import QWidget, QLabel, QHBoxLayout, QVBoxLayout, QGridLayout, QStackedLayout, QSpacerItem, QSizePolicy
 from PyQt5.QtGui import QPalette, QColor, QPainter, QPixmap
-import sys
 
-class MainWindow(QMainWindow):
+
+
+class LoginWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.showFullScreen()
-        aiaaLogo = QLabel('cropped-aiaaweblogo-2.png')
-        aiaaLogo.setPixmap(QPixmap('cropped-aiaaweblogo-2.png'))
-        self.setCentralWidget(aiaaLogo)
-        self.setFixedSize(QSize(800,480))
 
-    def KeyPressEvent(self, event):
+
+        layout = QGridLayout()
+
+        aiaaLogo = QLabel()
+        aiaaLogo.setPixmap(QPixmap('cropped-aiaaweblogo-2.png'))
+        spacerL = QSpacerItem(40, 20, QSizePolicy.Minimum, QSizePolicy.Expanding);
+        spacerR = QSpacerItem(40, 20, QSizePolicy.Minimum, QSizePolicy.Expanding);
+        spacerT = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding);
+        spacerB = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding);
+
+        # populate the layout
+        layout.addItem(spacerL,0,0)
+        layout.addItem(spacerT, 0,1)
+        layout.addItem(spacerR,0,2)
+        layout.addItem(spacerL,1,0)
+        layout.addWidget(aiaaLogo,1,1)
+        layout.addItem(spacerR,1,2)
+        layout.addItem(spacerL,2,0)
+        layout.addItem(spacerB,2,1)
+        layout.addItem(spacerR,2,2)
+
+        # set the layout to the window
+        self.setLayout(layout)
+
+    def keyPressEvent(self, event):
         if event.key() == Qt.Key_Escape:
             self.close()
-
-app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-
-app.exec()
