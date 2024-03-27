@@ -1,7 +1,6 @@
 [Unit]
 Description=Collects Data from Rocket
-After=multi-user.target
-Before=startApp.service
+
 
 [Service]
 ExecStart=/home/natensamul/groundStation/os-files/airData.sh
