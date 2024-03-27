@@ -19,19 +19,11 @@ class LoginWindow(QWidget):
         spacerB = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding);
 
         # populate the layout
-        layout.addItem(spacerL,0,0)
         layout.addItem(spacerT, 0,1)
-        layout.addItem(spacerR,0,2)
         layout.addItem(spacerL,1,0)
         layout.addWidget(aiaaLogo,1,1)
         layout.addItem(spacerR,1,2)
-        layout.addItem(spacerL,2,0)
         layout.addItem(spacerB,2,1)
-        layout.addItem(spacerR,2,2)
 
         # set the layout to the window
         self.setLayout(layout)
-
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Escape:
-            self.close()

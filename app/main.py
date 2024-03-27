@@ -22,6 +22,15 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(mainWidget)
         self.showFullScreen()
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            self.close()
+        if event.key() == Qt.Key_1:
+            self.windowStack.setCurrentIndex(0)
+        if event.key() == Qt.Key_2:
+            self.windowStack.setCurrentIndex(1)
+            
+
 
 app = QApplication(sys.argv)
 window = MainWindow()
