@@ -6,6 +6,7 @@ import sys
 
 # Local Imports
 from login import LoginWindow
+from numpad import Numpad
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -13,13 +14,15 @@ class MainWindow(QMainWindow):
 
         self.windowStack = QStackedLayout()
         loginWindow = LoginWindow()
+        numpad = Numpad()
         button = QPushButton("filler button")
         self.windowStack.addWidget(loginWindow)
-        self.windowStack.addWidget(button)
+        self.windowStack.addWidget(numpad)
 
         mainWidget = QWidget()
         mainWidget.setLayout(self.windowStack)
         self.setCentralWidget(mainWidget)
+        self.setFixedSize(800,480)
         self.showFullScreen()
 
     def keyPressEvent(self, event):
@@ -29,8 +32,6 @@ class MainWindow(QMainWindow):
             self.windowStack.setCurrentIndex(0)
         if event.key() == Qt.Key_2:
             self.windowStack.setCurrentIndex(1)
-            
-
 
 app = QApplication(sys.argv)
 window = MainWindow()
