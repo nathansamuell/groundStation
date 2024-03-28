@@ -1,13 +1,26 @@
 # imports
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import QSize, Qt, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QSpacerItem, QSizePolicy, QPushButton
 
+# app class imports
+
+# login imports
+from dotenv import load_dotenv
+import os
+
 class Numpad(QWidget):
+
+    # authenticator signals
+    loginSuccess = pyqtSignal()
+    loginFailure = pyqtSignal()
+
+
     def __init__(self):
         super().__init__()
 
+        load_dotenv()
         layout = QGridLayout()
-
+        self.loginPin = ""
         # create button list
         buttons = []
         enterButton = QPushButton("ENTER") # a special button
@@ -18,8 +31,10 @@ class Numpad(QWidget):
         for i in list(range(1,10))+[0]:
             button = QPushButton(str(i))
             button.setSizePolicy(buttonPolicy)
+            button.clicked.connect(lambda checked, button=button: self.buttonClicked(button))
             buttons.append(button)
         buttons.append(enterButton)
+        enterButton.clicked.connect(lambda: self.buttonClicked(enterButton))
 
         lSpacer = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Ignored)
         rSpacer = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Ignored)
@@ -40,3 +55,53 @@ class Numpad(QWidget):
 
         # set the layout to the window
         self.setLayout(layout)
+
+    def buttonClicked(self,buttonClicked):
+        if buttonClicked.text() == "1":
+            self.loginPin = self.loginPin + "1"
+
+        elif buttonClicked.text() == "2":
+            self.loginPin = self.loginPin + "2"
+
+        elif buttonClicked.text() == "3":
+            self.loginPin = self.loginPin + "3"
+
+        elif buttonClicked.text() == "4":
+            self.loginPin = self.loginPin + "4"
+
+        elif buttonClicked.text() == "5":
+            self.loginPin = self.loginPin + "5"
+
+        elif buttonClicked.text() == "6":
+            self.loginPin = self.loginPin + "6"
+
+        elif buttonClicked.text() == "7":
+            self.loginPin = self.loginPin + "7"
+
+        elif buttonClicked.text() == "8":
+            self.loginPin = self.loginPin + "8"
+
+        elif buttonClicked.text() == "9":
+            self.loginPin = self.loginPin + "9"
+
+        elif buttonClicked.text() == "0":
+            self.loginPin = self.loginPin + "0"
+        else:
+
+            print("enter button pressed")
+            print(self.loginPin)
+            self.authenticate()
+
+    def authenticate(self):
+        enteredPassword = self.loginPin
+        userPin = os.getenv('USER_PIN')
+        print(userPin)
+        print("authenticate method called")
+
+        if userPin == enteredPassword:
+            self.loginSuccess.emit()
+            print("login signal emit call reached")
+        else:
+            self.loginFailure.emit()
+
+        self.loginPin = ""
