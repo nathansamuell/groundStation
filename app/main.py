@@ -16,6 +16,7 @@ class MainWindow(QMainWindow):
         self.windowStack = QStackedLayout()
         self.loginWindow = LoginWindow()
         self.loginWindow.numpad.loginSuccess.connect(self.loginSuccess)
+        self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
 
         button = QPushButton("filler button")
         self.windowStack.addWidget(self.loginWindow)
@@ -25,13 +26,13 @@ class MainWindow(QMainWindow):
         mainWidget.setLayout(self.windowStack)
         self.setCentralWidget(mainWidget)
         self.setFixedSize(800,480)
-        self.showFullScreen()
+        # self.showFullScreen()
 
     def loginSuccess(self):
         self.windowStack.setCurrentIndex(1)
 
     def loginFailure(self):
-        self.loginWindow.enterPinText = "IncorrectPin--try again:"
+        self.loginWindow.enterPinText.setText("Incorrect Pin--Try Again: ")
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Escape:

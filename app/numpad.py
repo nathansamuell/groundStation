@@ -103,5 +103,5 @@ class Numpad(QWidget):
             print("login signal emit call reached")
         else:
             self.loginFailure.emit()
-
+            print("login failure emit call reached")
         self.loginPin = ""
