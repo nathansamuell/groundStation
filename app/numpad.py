@@ -1,19 +1,16 @@
 # imports
-from PyQt5.QtCore import QSize, Qt, pyqtSignal
-from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QSpacerItem, QSizePolicy, QPushButton
-
-# app class imports
-
-# login imports
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtWidgets import QGridLayout, QPushButton, QSizePolicy, QSpacerItem, QWidget
+
 
 class Numpad(QWidget):
 
     # authenticator signals
     loginSuccess = pyqtSignal()
     loginFailure = pyqtSignal()
-
 
     def __init__(self):
         super().__init__()
@@ -23,21 +20,24 @@ class Numpad(QWidget):
         self.loginPin = ""
         # create button list
         buttons = []
-        enterButton = QPushButton("ENTER") # a special button
+        enterButton = QPushButton("ENTER")  # a special button
         # create button size policy
         buttonPolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         enterButton.setSizePolicy(buttonPolicy)
         # create buttons
-        for i in list(range(1,10))+[0]:
+        for i in list(range(1, 10)) + [0]:
             button = QPushButton(str(i))
             button.setSizePolicy(buttonPolicy)
-            button.clicked.connect(lambda checked, button=button: self.buttonClicked(button))
+            button.clicked.connect(
+                lambda checked, button=button: self.buttonClicked(button)
+            )
             buttons.append(button)
+
         buttons.append(enterButton)
         enterButton.clicked.connect(lambda: self.buttonClicked(enterButton))
 
         lSpacer = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Ignored)
-        rSpacer = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Ignored)
+        # rSpacer = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Ignored)
 
         # add buttons to layout
         layout.addWidget(buttons[0], 0, 0)
@@ -56,7 +56,7 @@ class Numpad(QWidget):
         # set the layout to the window
         self.setLayout(layout)
 
-    def buttonClicked(self,buttonClicked):
+    def buttonClicked(self, buttonClicked):
         if buttonClicked.text() == "1":
             self.loginPin = self.loginPin + "1"
 
@@ -94,7 +94,7 @@ class Numpad(QWidget):
 
     def authenticate(self):
         enteredPassword = self.loginPin
-        userPin = os.getenv('USER_PIN')
+        userPin = os.getenv("USER_PIN")
         print(userPin)
         print("authenticate method called")
 
