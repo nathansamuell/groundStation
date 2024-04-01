@@ -88,20 +88,20 @@ class Numpad(QWidget):
             self.loginPin = self.loginPin + "0"
         else:
 
-            print("enter button pressed")
-            print(self.loginPin)
+            # print("enter button pressed")
+            # print(self.loginPin)
             self.authenticate()
 
     def authenticate(self):
         enteredPassword = self.loginPin
         userPin = os.getenv("USER_PIN")
-        print(userPin)
-        print("authenticate method called")
+        # print(userPin)
+        # print("authenticate method called")
 
         if userPin == enteredPassword:
             self.loginSuccess.emit()
-            print("login signal emit call reached")
+            # print("login signal emit call reached")
         else:
             self.loginFailure.emit()
-            print("login failure emit call reached")
+            # print("login failure emit call reached")
         self.loginPin = ""
