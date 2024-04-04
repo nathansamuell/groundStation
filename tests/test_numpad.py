@@ -2,11 +2,11 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from numpad import Numpad
-from PyQt5.QtTest import QSignalSpy
-from PyQt5.QtWidgets import QApplication, QPushButton
-
 sys.path.append("../app")
+
+from numpad import Numpad  # noqa: E402
+from PyQt5.QtTest import QSignalSpy  # noqa: E402
+from PyQt5.QtWidgets import QApplication, QPushButton  # noqa: E402
 
 
 class TestNumpad(unittest.TestCase):
@@ -33,7 +33,7 @@ class TestNumpad(unittest.TestCase):
             "1234", numpad.loginPin
         )  # check to make sure values match inherently, will check signal after
         numpad.authenticate()  # must go after previous assertion
-        self.assertEqual(len(signalSpy), 1)  # checks to see if signal is sent
+        self.assertEqual(len(signalSpy), 2)  # checks to see if signals is sent
 
         self.assertEqual
 

@@ -11,38 +11,33 @@
 # imports
 import sys
 
+from display import DataDisplay
 from login import LoginWindow
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QPushButton,
-    QStackedLayout,
-    QWidget,
-)
+from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        fillerButton = QPushButton("filler button")
         self.windowStack = QStackedLayout()
         self.loginWindow = LoginWindow()
         self.loginWindow.numpad.loginSuccess.connect(self.loginSuccess)
         self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
 
         self.windowStack.addWidget(self.loginWindow)
-        self.windowStack.addWidget(fillerButton)
 
         mainWidget = QWidget()
         mainWidget.setLayout(self.windowStack)
         self.setCentralWidget(mainWidget)
         self.setFixedSize(800, 480)
-        self.showFullScreen()
+        # self.showFullScreen()
 
     def loginSuccess(self):
         self.windowStack.setCurrentIndex(1)
+        self.dataDisplay = DataDisplay()
+        self.windowStack.addWidget(self.dataDisplay)
 
     def loginFailure(self):
         self.loginWindow.enterPinText.setText("Incorrect Pin--Try Again: ")
