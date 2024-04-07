@@ -33,7 +33,7 @@ class TestNumpad(unittest.TestCase):
             "1234", numpad.loginPin
         )  # check to make sure values match inherently, will check signal after
         numpad.authenticate()  # must go after previous assertion
-        self.assertEqual(len(signalSpy), 2)  # checks to see if signals is sent
+        self.assertEqual(len(signalSpy), 1)  # checks to see if signal is sent
 
         self.assertEqual
 
