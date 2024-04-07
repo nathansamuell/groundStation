@@ -4,3 +4,4 @@ app/__pycache__
 .env
 app/dataOut.tmp
 app/outputName.csv
+src/groundStation.egg-info

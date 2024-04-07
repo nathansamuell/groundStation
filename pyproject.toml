@@ -10,7 +10,7 @@ authors = [
     {name="Nathan Samuell", email="nathansamuell@duck.com"},
 ]
 readme = "README.md"
-licence = {file = "LICENSE"}
+license = {file = "LICENSE"}
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
