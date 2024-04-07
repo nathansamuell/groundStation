@@ -1,0 +1,5 @@
+[project]
+name = "groundStation"
+version = "0.1.0"
+dependencies = ["pyqt5>=5.15.10"]
+
