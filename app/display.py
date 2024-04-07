@@ -28,10 +28,13 @@ class DataDisplay(QTextBrowser):
         if not self.timer.isActive():
             self.timer.stop()
 
-        self.timer.start(1000)
+        self.timer.start(50)
 
     def dataOut(self):
-        self.appendText()
+        if not (self.iterations < 20):
+            self.appendText()
+            self.iterations = 0
+
         self.fileWriter.addToFile(
             "This Message is appended! " + str(self.iterations) + "\n"
         )
