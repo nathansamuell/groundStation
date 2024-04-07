@@ -35,20 +35,17 @@ class MainWindow(QMainWindow):
         # self.showFullScreen()
 
     def loginSuccess(self):
-        self.windowStack.setCurrentIndex(1)
         self.dataDisplay = DataDisplay()
         self.windowStack.addWidget(self.dataDisplay)
+        self.windowStack.setCurrentIndex(1)
 
     def loginFailure(self):
         self.loginWindow.enterPinText.setText("Incorrect Pin--Try Again: ")
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Escape:
+            self.dataDisplay.fileWriter.writeEOF("outputName")
             self.close()
-        if event.key() == Qt.Key_1:
-            self.windowStack.setCurrentIndex(0)
-        if event.key() == Qt.Key_2:
-            self.windowStack.setCurrentIndex(1)
 
 
 # start app

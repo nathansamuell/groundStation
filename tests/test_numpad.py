@@ -1,3 +1,14 @@
+# SRAD Avionics Ground Software for AIAA UH
+#
+# Copyright (c) 2024 Nathan Samuell (www.github.com/nathansamuell)
+# Licensed under the MIT License
+#
+# More information on the MIT license as well as a complete copy
+# of the license can be found here: https://choosealicense.com/licenses/mit/
+# All above text must be included in any restribution.
+
+
+# imports
 import sys
 import unittest
 from unittest.mock import patch
@@ -33,7 +44,7 @@ class TestNumpad(unittest.TestCase):
             "1234", numpad.loginPin
         )  # check to make sure values match inherently, will check signal after
         numpad.authenticate()  # must go after previous assertion
-        self.assertEqual(len(signalSpy), 2)  # checks to see if signals is sent
+        self.assertEqual(len(signalSpy), 1)  # checks to see if signal is sent
 
         self.assertEqual
 

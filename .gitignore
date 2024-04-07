@@ -1,5 +1,6 @@
 venv
-__pycache__
+app/__pycache__
 .vscode
 .env
-learning
+app/dataOut.tmp
+app/outputName.csv
