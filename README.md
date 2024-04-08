@@ -17,9 +17,10 @@ Setup and Start Python Virtual Environment:
 `python3 -m venv venv`
 `source bin/venv/activate`
 
-Install Dependencies
+Install Project + Dependencies
 
-`pip3 install pyqt5`
+`cd groundStation`
+`pip3 install -e .`
 
 If installing on Running Machine
 
@@ -27,6 +28,7 @@ Install source code
 
 `git clone https://github.com/nathansamuell/groundStation/`
 
-Install Dependencies
+Install Project Dependencies
 
-`pip3 install pyqt5`
+`cd groundStation`
+`pip3 install .`
