@@ -38,7 +38,7 @@ class LoginWindow(QWidget):
         spacerL = QSpacerItem(240, QSizePolicy.Ignored)
         spacerR = QSpacerItem(240, QSizePolicy.Ignored)
 
-        aiaaLogo.setPixmap(QPixmap("/src/groundStation/cropped-aiaaweblogo-2.png"))
+        aiaaLogo.setPixmap(QPixmap("cropped-aiaaweblogo-2.png"))
         self.numpad = Numpad()
 
         layout1 = QHBoxLayout()

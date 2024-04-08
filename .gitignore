@@ -1,7 +1,7 @@
 venv
-app/__pycache__
+src/groundStation/__pycache__
 .vscode
 .env
-app/dataOut.tmp
-app/outputName.csv
+src/dataOut.tmp
+src/outputName.csv
 src/groundStation.egg-info

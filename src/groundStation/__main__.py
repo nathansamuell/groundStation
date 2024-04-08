@@ -48,7 +48,7 @@ class MainWindow(QMainWindow):
         if event.key() == Qt.Key_Escape:
             if self.isDisplayOn:
                 self.dataDisplay.fileWriter.writeEOF("outputName")
-            
+
             self.close()
 
 
