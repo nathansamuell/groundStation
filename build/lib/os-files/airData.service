@@ -1,0 +1,7 @@
+[Unit]
+Description=Collects Data from Rocket
+
+
+[Service]
+ExecStart=/home/natensamul/groundStation/os-files/airData.sh
+Type=simple
