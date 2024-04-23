@@ -7,23 +7,37 @@
 # of the license can be found here: https://choosealicense.com/licenses/mit/
 # All above text must be included in any restribution.
 
-
-# you need to install pyserial to the environment
-
 # imports
-import serial
+import threading
+
+import serial  # noqa: F401
 
 
-class SCommunicator:
+class SerialCommunicator:
     def __init__(self, sp, br):
-        serialPort = sp
-        baudRate = br
-        self.ser = serial.Serial(serialPort, baudRate)
+        serialPort = sp  # noqa: F841
+        baudRate = br  # noqa: F841
+        # self.ser = serial.Serial(serialPort, baudRate)
 
-    def read(self):
-        codedBits = self.ser.readline()
-        bits = codedBits.decode()
-        return bits
+        self.stopEvent = threading.Event()
+
+    # def read(self):
+    # codedBits = self.ser.readline()  # noqa: E1101
+    # bits = codedBits.decode()
+    # return bits
+
+    # def transmit(self, message):
+    # self.ser.write(message.encode())  # noqa: E1101
 
     def write(self, message):
-        self.ser.write(message.encode())
+        return message
+
+    def start(self, queue):
+        while not self.stopEvent.is_set():
+            # message = self.read()
+            message = "Testing message read "
+            if not message == "":
+                queue.put(message)
+
+    def stop(self):
+        self.stopEvent.set()
