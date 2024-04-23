@@ -12,18 +12,30 @@
 
 # imports
 import serial
+import threading
 
 
-class SCommunicator:
+class SerialCommunicator:
     def __init__(self, sp, br):
         serialPort = sp
         baudRate = br
-        self.ser = serial.Serial(serialPort, baudRate)
+        # self.ser = serial.Serial(serialPort, baudRate)
 
     def read(self):
         codedBits = self.ser.readline()
         bits = codedBits.decode()
         return bits
 
-    def write(self, message):
+    def transmit(self, message):
         self.ser.write(message.encode())
+
+    def write(self, message):
+        return message
+
+    def start(self, queue):
+        while True:
+            # message = self.read()
+            message = "Testing message read "
+            if not message == "": 
+                queue.put(message)
+

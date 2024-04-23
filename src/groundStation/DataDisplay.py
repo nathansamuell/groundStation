@@ -9,20 +9,33 @@
 
 # imports
 from groundStation.FileWriter import FileWriter
+from groundStation.SerialCommunicator import SerialCommunicator
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QTextBrowser
+import queue
+import threading
 
 
 class DataDisplay(QTextBrowser):
     def __init__(self):
         super().__init__()
-        self.iterations = 0
+
+        # object instantiation
         self.timer = QTimer(self)
         self.fileWriter = FileWriter()
+        self.sc = SerialCommunicator("/dev/serial0", 9600)
+
+        # connections and variable instantiations
         self.timer.timeout.connect(self.dataOut)
         self.timerRunning = False
+        self.iterations = 0
+        self.q = queue.Queue()
+
+        # setup for before run
         self.setPlainText("This is the starting message!")
         self.displayLoop()
+        listenThread = threading.Thread(target=self.sc.start, args=[self.q])
+        listenThread.start()
 
     def displayLoop(self):
         if not self.timer.isActive():
@@ -31,14 +44,15 @@ class DataDisplay(QTextBrowser):
         self.timer.start(50)
 
     def dataOut(self):
+        message = str(self.q.get())
         if not (self.iterations < 20):
-            self.appendText()
+            self.appendText(message)
             self.iterations = 0
 
         self.fileWriter.addToFile(
-            "This Message is appended! " + str(self.iterations) + "\n"
+            str(self.q.get()) + str(self.iterations) + "\n"
         )
         self.iterations += 1
 
-    def appendText(self):
-        self.append("This message is appended!")
+    def appendText(self, message):
+        self.append(message)
