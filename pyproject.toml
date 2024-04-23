@@ -1,14 +1,16 @@
 [build-system]
-requires = ["setuptools>=61.0", "setuptools-scm"]
+requires = ["setuptools>=61.0","setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "groundStation"
 version = "0.1.0"
-dependencies = ["pyqt5>=5.15.10", "python-dotenv", "pyserial"]
-authors = [{ name = "Nathan Samuell", email = "nathansamuell@duck.com" }]
+dependencies = ["pyqt5>=5.15.10", "python-dotenv"]
+authors = [
+    {name="Nathan Samuell", email="nathansamuell@duck.com"},
+]
 readme = "README.md"
-license = { file = "LICENSE" }
+license = {file = "LICENSE"}
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",

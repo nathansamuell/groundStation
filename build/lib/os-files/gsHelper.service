@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs Ground Station
+Requires=airData.service
+
+[Service]
+ExecStart=/home/natensamul/groundStation/os-files/gsHelper.sh
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
