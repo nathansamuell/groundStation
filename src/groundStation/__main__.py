@@ -11,11 +11,7 @@
 import sys
 
 from groundStation.MainWindow import MainWindow
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
-
-
-
 
 if __name__ == "__main__":
     # start app

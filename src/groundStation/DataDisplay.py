@@ -8,12 +8,13 @@
 # All above text must be included in any restribution.
 
 # imports
+import queue
+import threading
+
 from groundStation.FileWriter import FileWriter
 from groundStation.SerialCommunicator import SerialCommunicator
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QTextBrowser
-import queue
-import threading
 
 
 class DataDisplay(QTextBrowser):
@@ -49,9 +50,7 @@ class DataDisplay(QTextBrowser):
             self.appendText(message)
             self.iterations = 0
 
-        self.fileWriter.addToFile(
-            str(self.q.get()) + str(self.iterations) + "\n"
-        )
+        self.fileWriter.addToFile(str(self.q.get()) + str(self.iterations) + "\n")
         self.iterations += 1
 
     def appendText(self, message):

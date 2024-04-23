@@ -12,7 +12,7 @@
 from groundStation.DataDisplay import DataDisplay
 from groundStation.LoginWindow import LoginWindow
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
+from PyQt5.QtWidgets import QMainWindow, QStackedLayout, QWidget
 
 
 class MainWindow(QMainWindow):
