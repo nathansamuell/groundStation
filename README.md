@@ -24,7 +24,7 @@ Install Project + Dependencies
 `pip3 install -e .`  
 `pip3 install PyQt5`
 
-If installing on Running Machine
+_If installing on Running Machine_
 
 Install source code
 
