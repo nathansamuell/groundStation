@@ -11,14 +11,13 @@
 # you need to install pyserial to the environment
 # imports
 import serial
-import os
 
-ser = serial.Serial('/dev/serial0',9600)
+ser = serial.Serial("/dev/serial0", 9600)
 
 message = "hey kurt"
 ser.write(message.encode())
 
-for i in range(1,10):
+for i in range(1, 10):
     data = ser.readline()
     decodedData = data.decode()
     print(decodedData)
