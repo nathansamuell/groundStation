@@ -47,4 +47,6 @@ class MainWindow(QMainWindow):
             if self.isDisplayOn:
                 self.dataDisplay.fileWriter.writeEOF("outputName")
 
+            # stops the listening thread and closes the app
+            self.dataDisplay.sc.stop()
             self.close()

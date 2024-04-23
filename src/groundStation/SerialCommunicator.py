@@ -21,6 +21,8 @@ class SerialCommunicator:
         baudRate = br
         # self.ser = serial.Serial(serialPort, baudRate)
 
+        self.stopEvent = threading.Event()
+
     def read(self):
         codedBits = self.ser.readline()
         bits = codedBits.decode()
@@ -33,9 +35,11 @@ class SerialCommunicator:
         return message
 
     def start(self, queue):
-        while True:
+        while not self.stopEvent.is_set():
             # message = self.read()
             message = "Testing message read "
-            if not message == "": 
+            if not message == "":
                 queue.put(message)
 
+    def stop(self):
+        self.stopEvent.set()
