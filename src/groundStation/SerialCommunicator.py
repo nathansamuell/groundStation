@@ -35,7 +35,7 @@ class SerialCommunicator:
     def start(self, queue):
         while not self.stopEvent.is_set():
             # message = self.read()
-            message = "Testing message read "
+            message = "Testing message read "  # Swap with the previous line to use the serial monitor
             if not message == "":
                 queue.put(message)
 
