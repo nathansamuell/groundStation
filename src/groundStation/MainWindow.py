@@ -9,19 +9,30 @@
 
 
 # imports
-from groundStation.DataDisplay import DataDisplay
+from enum import Enum
+from groundStation.Views import RawText
 from groundStation.LoginWindow import LoginWindow
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QStackedLayout, QWidget
 
 
+class windowStatus(Enum):
+    DEFAULT = 1
+    FLIGHT_TIME = 2
+    RAW_TEXT = 3
+
+
 class MainWindow(QMainWindow):
+    # view status signal
+    statusSignal = pyqtSignal(windowStatus)
+
     def __init__(self):
         super().__init__()
 
         self.isDisplayOn = False
         self.windowStack = QStackedLayout()
         self.loginWindow = LoginWindow()
+        self.statusSignal.connect(self.updateStatus)
         self.loginWindow.numpad.loginSuccess.connect(self.loginSuccess)
         self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
 
@@ -33,20 +44,35 @@ class MainWindow(QMainWindow):
         self.setFixedSize(800, 480)
         # self.showFullScreen()
 
+    def updateStatus(self, status):
+        if status == windowStatus.RAW_TEXT:
+            print("update status method called")
+            self.windowStack.setCurrentIndex(1)
+
     def loginSuccess(self):
         self.isDisplayOn = True
-        self.dataDisplay = DataDisplay()
-        self.windowStack.addWidget(self.dataDisplay)
-        self.windowStack.setCurrentIndex(1)
+        self.rawText = RawText()
+        self.windowStack.addWidget(self.rawText)
+        self.statusSignal.emit(windowStatus.RAW_TEXT)
+
 
     def loginFailure(self):
         self.loginWindow.enterPinText.setText("Incorrect Pin--Try Again: ")
 
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Escape:
+        if event.key() == Qt.Key_1:
+            self.statusSignal.emit(windowStatus.DEFAULT)
+
+        elif event.key() == Qt.Key_2:
+            self.statusSignal.emit(windowStatus.FLIGHT_TIME)
+
+        elif event.key() == Qt.Key_3:
+            self.statusSignal.emit(windowStatus.RAW_TEXT)
+
+        elif event.key() == Qt.Key_Escape:
             if self.isDisplayOn:
-                self.dataDisplay.fileWriter.writeEOF("outputName")
+                self.rawText.fileWriter.writeEOF("outputName")
 
             # stops the listening thread and closes the app
-            self.dataDisplay.sc.stop()
+            self.rawText.sc.stop()
             self.close()

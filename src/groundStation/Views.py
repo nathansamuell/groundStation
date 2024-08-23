@@ -17,7 +17,8 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QTextBrowser
 
 
-class DataDisplay(QTextBrowser):
+
+class RawText(QTextBrowser):
     def __init__(self):
         super().__init__()
 
