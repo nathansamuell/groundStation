@@ -17,7 +17,18 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QTextBrowser
 
 
-
+# the barebones view
+#
+# currently the default until I finish the new default view.
+# a list of those components will be left below later on
+#
+#
+#
+# other view ideas:
+#   --gps info/location info
+#   --flight stage/status
+#   --data transmission indicator?
+#   --send message to the rocket in the future maybe?
 class RawText(QTextBrowser):
     def __init__(self):
         super().__init__()
