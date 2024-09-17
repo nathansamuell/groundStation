@@ -9,19 +9,32 @@
 
 
 # imports
-from groundStation.DataDisplay import DataDisplay
-from groundStation.LoginWindow import LoginWindow
-from PyQt5.QtCore import Qt
+from enum import Enum
+
+from groundStation.Views import LoginWindow, RawText
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QStackedLayout, QWidget
 
 
+class windowStatus(Enum):
+    LOGIN = 0
+    DEFAULT = 1
+    FLIGHT_TIME = 2
+    RAW_TEXT = 3
+
+
 class MainWindow(QMainWindow):
+    # view status signal
+    statusSignal = pyqtSignal(windowStatus)
+
     def __init__(self):
         super().__init__()
 
         self.isDisplayOn = False
         self.windowStack = QStackedLayout()
         self.loginWindow = LoginWindow()
+        self.statusSignal.connect(self.updateStatus)
+        self.status = windowStatus.LOGIN
         self.loginWindow.numpad.loginSuccess.connect(self.loginSuccess)
         self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
 
@@ -31,22 +44,44 @@ class MainWindow(QMainWindow):
         mainWidget.setLayout(self.windowStack)
         self.setCentralWidget(mainWidget)
         self.setFixedSize(800, 480)
+        self.statusSignal.emit(windowStatus.LOGIN)
         # self.showFullScreen()
+
+    def updateStatus(self, status):
+        if status == windowStatus.RAW_TEXT:
+            print("update status method called")
+            self.status = windowStatus.RAW_TEXT
+            self.windowStack.setCurrentIndex(1)
+        elif status == windowStatus.LOGIN:
+            print("login window status called")
+            self.status = windowStatus.LOGIN
+            self.windowStack.setCurrentIndex(0)
 
     def loginSuccess(self):
         self.isDisplayOn = True
-        self.dataDisplay = DataDisplay()
-        self.windowStack.addWidget(self.dataDisplay)
-        self.windowStack.setCurrentIndex(1)
+        self.rawText = RawText()
+        self.windowStack.addWidget(self.rawText)
+        self.statusSignal.emit(windowStatus.RAW_TEXT)
 
     def loginFailure(self):
         self.loginWindow.enterPinText.setText("Incorrect Pin--Try Again: ")
 
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Escape:
+        if event.key() == Qt.Key_1:
+            self.statusSignal.emit(windowStatus.DEFAULT)
+
+        elif event.key() == Qt.Key_2:
+            self.statusSignal.emit(windowStatus.FLIGHT_TIME)
+
+        elif event.key() == Qt.Key_3:
+            self.statusSignal.emit(windowStatus.RAW_TEXT)
+
+        elif event.key() == Qt.Key_Escape:
             if self.isDisplayOn:
-                self.dataDisplay.fileWriter.writeEOF("outputName")
+                self.rawText.fileWriter.writeEOF("outputName")
 
             # stops the listening thread and closes the app
-            self.dataDisplay.sc.stop()
+            if self.status == windowStatus.RAW_TEXT:
+                self.rawText.sc.stop()
+
             self.close()

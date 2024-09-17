@@ -16,3 +16,13 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Development Status :: 2 - Pre-Alpha",
 ]
+
+[tool.setuptools]
+packages = ["groundStation"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+aiaa_logo = ["cropped-aiaaweblogo-2.png"]
+
+[tool.setuptools.include]
+include = ["groundStation/src/groundStation/cropped-aiaaweblogo-2.png"]
