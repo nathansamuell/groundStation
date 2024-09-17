@@ -10,13 +10,14 @@
 
 # imports
 from enum import Enum
-from groundStation.Views import RawText
-from groundStation.LoginWindow import LoginWindow
+
+from groundStation.Views import LoginWindow, RawText
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QStackedLayout, QWidget
 
 
 class windowStatus(Enum):
+    LOGIN = 0
     DEFAULT = 1
     FLIGHT_TIME = 2
     RAW_TEXT = 3
@@ -33,6 +34,7 @@ class MainWindow(QMainWindow):
         self.windowStack = QStackedLayout()
         self.loginWindow = LoginWindow()
         self.statusSignal.connect(self.updateStatus)
+        self.status = windowStatus.LOGIN
         self.loginWindow.numpad.loginSuccess.connect(self.loginSuccess)
         self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
 
@@ -42,19 +44,24 @@ class MainWindow(QMainWindow):
         mainWidget.setLayout(self.windowStack)
         self.setCentralWidget(mainWidget)
         self.setFixedSize(800, 480)
+        self.statusSignal.emit(windowStatus.LOGIN)
         # self.showFullScreen()
 
     def updateStatus(self, status):
         if status == windowStatus.RAW_TEXT:
             print("update status method called")
+            self.status = windowStatus.RAW_TEXT
             self.windowStack.setCurrentIndex(1)
+        elif status == windowStatus.LOGIN:
+            print("login window status called")
+            self.status = windowStatus.LOGIN
+            self.windowStack.setCurrentIndex(0)
 
     def loginSuccess(self):
         self.isDisplayOn = True
         self.rawText = RawText()
         self.windowStack.addWidget(self.rawText)
         self.statusSignal.emit(windowStatus.RAW_TEXT)
-
 
     def loginFailure(self):
         self.loginWindow.enterPinText.setText("Incorrect Pin--Try Again: ")
@@ -74,5 +81,7 @@ class MainWindow(QMainWindow):
                 self.rawText.fileWriter.writeEOF("outputName")
 
             # stops the listening thread and closes the app
-            self.rawText.sc.stop()
+            if self.status == windowStatus.RAW_TEXT:
+                self.rawText.sc.stop()
+
             self.close()
