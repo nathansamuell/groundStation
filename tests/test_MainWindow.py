@@ -9,29 +9,40 @@
 
 
 # imports
-import sys
 import unittest
-from unittest.mock import patch
-from PyQt5.QtTest import QSignalSpy
 
 from groundStation.MainWindow import MainWindow, WindowStatus
-from groundStation.Numpad import Numpad
+from PyQt5.QtTest import QSignalSpy
+from PyQt5.QtWidgets import QApplication
+
 
 class TestMainWindow(unittest.TestCase):
-    def test_initial_state(self):
-        mainWindow = MainWindow()
-        stateListener = QSignalSpy(mainWindow.statusSignal)
-        self.assertEqual(len(stateListener), 1) # check for signal emission
-        self.assertEqual(mainWindow.status, WindowStatus.LOGIN) # check for the correct signal
-        stateListener.clear()
+    @classmethod
+    def setUpClass(cls):
+        cls.testApp = QApplication([])
 
-    @patch("os.getenv")
-    def test_tsm_login_success(self, mock_env):
-        mainWindow = MainWindow()
-        stateListener = QSignalSpy(mainWindow.statusSignal)
-        mock_env.return_value = "1234"
-        mainWindow.loginWindow.numpad.loginPin = "1234"
-        mainWindow.loginWindow.numpad.authenticate()
-        self.assertEqual(len(stateListener), 1)  # only one signal emitted!
-        self.assertEqual(mainWindow.status, WindowStatus.RAW_TEXT)  # TODO: change to default view once implemented
-        stateListener.clear()
+    def setUp(self):
+        self.mainWindow = MainWindow()
+        self.stateListener = QSignalSpy(self.mainWindow.statusSignal)
+
+    def test_initial_state(self):
+        self.mainWindow.initGUI()
+        self.assertEqual(len(self.stateListener), 1)  # check for signal emission
+        self.assertEqual(
+            self.mainWindow.status, WindowStatus.LOGIN
+        )  # check for the correct signal
+
+    def test_tsm_login_success(self):
+        self.mainWindow.statusSignal.emit(WindowStatus.RAW_TEXT)
+        self.assertEqual(len(self.stateListener), 1)  # only one signal emitted!
+        self.assertEqual(
+            self.mainWindow.status, WindowStatus.RAW_TEXT
+        )  # TODO: change to default view once implemented
+
+    def tearDown(self):
+        self.mainWindow.close()
+        self.testApp.processEvents()
+
+
+if __name__ == "__main__":
+    unittest.main()

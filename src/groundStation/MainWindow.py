@@ -34,10 +34,10 @@ class MainWindow(QMainWindow):
         self.windowStack = QStackedLayout()
         self.loginWindow = LoginWindow()
         self.statusSignal.connect(self.updateStatus)
-        self.status = WindowStatus.LOGIN
         self.loginWindow.numpad.loginSuccess.connect(self.loginSuccess)
         self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
 
+    def initGUI(self):
         self.windowStack.addWidget(self.loginWindow)
 
         mainWidget = QWidget()
