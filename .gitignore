@@ -1,5 +1,6 @@
 venv
 src/groundStation/__pycache__
+tests/__pycache__
 .vscode
 .env
 src/dataOut.tmp

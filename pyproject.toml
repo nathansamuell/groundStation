@@ -18,11 +18,8 @@ classifiers = [
 ]
 
 [tool.setuptools]
-packages = ["groundStation"]
+packages = { find = { where = ["src"] } }
 include-package-data = true
 
 [tool.setuptools.package-data]
 aiaa_logo = ["cropped-aiaaweblogo-2.png"]
-
-[tool.setuptools.include]
-include = ["groundStation/src/groundStation/cropped-aiaaweblogo-2.png"]
