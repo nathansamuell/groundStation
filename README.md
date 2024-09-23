@@ -40,7 +40,7 @@ Replace _your-pass_ with a numeric code in the following snippet:
   
 Install the package:  
 `cd groundStation`  
-`pip3 install . --break-system-packages` 
+`pip3 install . --break-system-packages`  
   
   
 Running Tests:
