@@ -44,6 +44,15 @@ const members = [
       { icon: 'linkedin', link: 'https://linkedin.com/in/nathan-samuell' }
     ]
   },
+
+  {
+    avatar: 'https://www.github.com/UH-AIAA.png',
+    name: 'AIAA UH',
+    title: 'Affiliate',
+    links: [
+      { icon: 'github', link: 'https://github.com/UH-AIAA' }
+    ]
+  }
 ]
 </script>
 
