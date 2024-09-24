@@ -1,0 +1,34 @@
+name: Deploy VitePress Site
+
+on:
+  push:
+    branches:
+      - docs # Change to your default branch if different
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '22'  # Use the Node.js version your project requires
+
+    - name: Install dependencies
+      run: |
+        npm install
+
+    - name: Build the site
+      run: |
+        npm run build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist  # The directory to publish
+        publish_branch: gh-pages  # The branch to deploy to
