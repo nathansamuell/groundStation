@@ -11,8 +11,8 @@ hero:
       text: Get Started
       link: /markdown-examples
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: In The Wild
+      link:
     - theme: alt
       text: GitHub
       link: https://github.com/nathansamuell/groundStation
