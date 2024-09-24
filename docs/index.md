@@ -4,15 +4,18 @@ layout: home
 
 hero:
   name: "GroundStation"
-  text: "Rocket monitoring reimagined"
-  tagline: Open Source Rocket Software Developed for AIAA-UH by [Nathan Samuell](github.com/nathansamuell)
+  text: "Rocket Monitoring Reimagined 🚀"
+  tagline: Developed by Nathan Samuell for AIAA-UH
   actions:
     - theme: brand
-      text: Markdown Examples
+      text: Get Started
       link: /markdown-examples
-    - theme: brand
+    - theme: alt
       text: API Examples
       link: /api-examples
+    - theme: alt
+      text: GitHub
+      link: https://github.com/nathansamuell/groundStation
 
 features:
   - title: Real-Time monitoring
@@ -24,3 +27,31 @@ features:
   - title: APRS Broadcasting
     details: Share your rocket's status with spectators around the world
 ---
+  
+  
+
+
+<script setup>
+import { VPTeamMembers } from 'vitepress/theme'
+
+const members = [
+  {
+    avatar: 'https://www.github.com/nathansamuell.png',
+    name: 'Nathan Samuell',
+    title: 'Creator',
+    links: [
+      { icon: 'github', link: 'https://github.com/yyx990803' },
+      { icon: 'linkedin', link: 'https://linkedin.com/in/nathan-samuell' }
+    ]
+  },
+]
+</script>
+  
+
+
+  
+# Our Team
+
+Say hello to our awesome team.
+
+<VPTeamMembers size="small" :members="members" />
