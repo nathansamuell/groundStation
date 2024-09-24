@@ -27,8 +27,8 @@ features:
   - title: APRS Broadcasting
     details: Share your rocket's status with spectators around the world
 ---
-  
-  
+
+
 
 
 <script setup>
@@ -40,16 +40,16 @@ const members = [
     name: 'Nathan Samuell',
     title: 'Creator',
     links: [
-      { icon: 'github', link: 'https://github.com/yyx990803' },
+      { icon: 'github', link: 'https://github.com/nathansamuell' },
       { icon: 'linkedin', link: 'https://linkedin.com/in/nathan-samuell' }
     ]
   },
 ]
 </script>
-  
 
 
-  
+
+
 # Our Team
 
 Say hello to our awesome team.
