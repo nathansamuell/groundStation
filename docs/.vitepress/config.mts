@@ -1,4 +1,4 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, type DefaultTheme } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -12,20 +12,13 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     logo: "/cropped-aiaaweblogo-2.png",
 
-    nav: [
-      { text: "Home", link: "/" },
-      { text: "Examples", link: "/markdown-examples" },
-    ],
+    nav: nav(),
 
-    sidebar: [
+    sidebar: 
       {
-        text: "Examples",
-        items: [
-          { text: "Markdown Examples", link: "/markdown-examples" },
-          { text: "Runtime API Examples", link: "/api-examples" },
-        ],
+        '/user-guide/': { base: '/user-guide/', items: sidebarUser() },
+      '/developer-reference/': { base: '/developer-reference/', items: sidebarDev() }
       },
-    ],
 
     socialLinks: [
       {
@@ -40,3 +33,37 @@ export default defineConfig({
     },
   },
 });
+
+function nav(): DefaultTheme.NavItem[] {
+  return [
+    { text: "For Users", link: "/user-guide/user-landing", activeMatch: "/user-guide/" },
+    { text: "For Developers", link: "/developer-reference/dev-landing", activeMatch: "/developer-reference/" }
+  ]
+}
+
+function sidebarUser(): DefaultTheme.SidebarItem[] {
+  return [
+    {
+      text: "Quickstart",
+      collapsed: false,
+      items: [
+        {text: "What is GroundStation?", link:"/user-landing"},
+        {text: "Installation", link:"/installation"}
+      ]
+    }
+  ]
+
+}
+
+function sidebarDev(): DefaultTheme.SidebarItem[] {
+  return [
+    {
+      text: "Ground Station Developer Reference",
+      collapsed: false,
+      items: [
+        {text: "Welcome!", link:"/dev-landing"}
+      ]
+    }
+  ]
+
+}
