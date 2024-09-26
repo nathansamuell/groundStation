@@ -10,6 +10,7 @@ Welcome to GroundStation! GroundStation is a batteries included rocket-montoring
 - broadcasting selected rocket data to [aprs.fi!](https://aprs.fi)
 - lossless data processing
 - incorruptible rocket flight data during launch
+- password protected runtime 
 
 #### Future Features:
 - real time visual data processing (graphs, visuals, etc)

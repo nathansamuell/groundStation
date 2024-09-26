@@ -48,7 +48,8 @@ function sidebarUser(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         {text: "What is GroundStation?", link:"/user-landing"},
-        {text: "Installation", link:"/installation"}
+        {text: "Installation", link:"/installation"},
+        {text: "Setup", link:"/setup"}
       ]
     }
   ]
