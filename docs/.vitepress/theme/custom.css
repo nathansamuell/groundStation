@@ -1,8 +1,8 @@
 /* .vitepress/theme/custom.css */
 :root {
-  --vp-c-brand-3: #e9a53f;
+  --vp-c-brand-3: #e99a3f;
   --vp-c-brand-2: #d4392e;
-  --vp-c-brand-1: #e9a53f;
+  --vp-c-brand-1: #e99a3f;
 
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #fe4234, #ffd341);
