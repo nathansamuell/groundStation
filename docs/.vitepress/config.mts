@@ -10,7 +10,7 @@ export default defineConfig({
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: "/cropped-aiaaweblogo-2.png",
+    logo: "/.vitepress/cropped-aiaaweblogo-2.png",
 
     nav: nav(),
 
