@@ -19,6 +19,8 @@ print("serial init complete")
 print("starting read loop")
 for i in range(20):
     print(i)
+    message = str(i)
+    # ser.write(message.encode('utf-8'))
     codedBits = ser.readline()
     message = codedBits.decode()
     if message == "":
