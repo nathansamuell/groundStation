@@ -49,6 +49,13 @@ function sidebarUser(): DefaultTheme.SidebarItem[] {
       items: [
         {text: "What is GroundStation?", link:"/user-landing"},
         {text: "Installation", link:"/installation"},
+      ]
+    },
+    {
+      text: "Configuring GroundStation",
+      collapsed: false,
+      items: [
+        {text: "Using the .env file", link:"/env?"},
         {text: "Setup", link:"/setup"}
       ]
     }

@@ -6,9 +6,12 @@ This software is meant to be run on a Raspberry Pi -- To install on other operat
 
 </div>
 
+For those that have done this before, [skip to the install instructions.](#install-source-code)
+
 ### Overview
 
-For those that don't like reading, [skip to the install instructions.](#install-source-code)
+This installation process is the *fastest, least-configurable* method - **other configuration will likely be necessary.** More info [here.](env.md)
+
 
 GroundStation is a python app, and will be installed using pip. The app is currently in alpha release, and as such is not uploaded to PyPi or any similar package index. Instead, we will clone the project from github, and install from the source code file. Don't worry -- installing from source code still gives you stable code and is fairly straightforward.
 
@@ -37,4 +40,8 @@ Replace your-pass with a numeric code in the following snippet:
 ```cd groundStation```  
 ```pip3 install . --break-system-packages```
 
-The ```--break-system-packages``` flag is **NEEDED** to directly install the package to disk. More information on this decision was made can be found [here.](install-on-other-systems.md) The good news is, GroundStation won't actaully break any of your system packages, despite the name of the flag :)
+The ```--break-system-packages``` flag is **NEEDED** to directly install the package to disk. More information on this decision was made can be found [here.](install-on-other-systems.md) The good news is, GroundStation won't actaully break any of your system packages, despite the name of the flag.
+
+::: tip
+Don't forget to look at GroundStation's [configuration options!](env.md)
+:::
