@@ -9,10 +9,12 @@
 
 # imports
 import importlib.resources as resources  # used for image handling
+import os
 import queue
 import threading
 
 # app class/qt imports
+from dotenv import load_dotenv
 from groundStation.FileWriter import FileWriter
 from groundStation.Numpad import Numpad
 from groundStation.SerialCommunicator import SerialCommunicator
@@ -92,7 +94,15 @@ class RawText(QTextBrowser):
         # object instantiation
         self.timer = QTimer(self)
         self.fileWriter = FileWriter()
-        self.sc = SerialCommunicator("/dev/serial0", 9600)
+        # find the right serial port
+        load_dotenv()
+        mock = os.getenv("MOCK_SERIAL")
+        if mock == "True":
+            port = os.getenv("MOCK_SPORT_GS")
+            self.sc = SerialCommunicator(port, 9600)
+        else:
+            port = os.getenv("SERIAL_PORT")
+            self.sc = SerialCommunicator(port, 9600)
 
         # connections and variable instantiations
         self.timer.timeout.connect(self.dataOut)
@@ -110,7 +120,7 @@ class RawText(QTextBrowser):
         if not self.timer.isActive():
             self.timer.stop()
 
-        self.timer.start(50)
+        self.timer.start(10)
 
     def dataOut(self):
         message = str(self.q.get())
@@ -118,7 +128,11 @@ class RawText(QTextBrowser):
             self.appendText(message)
             self.iterations = 0
 
-        self.fileWriter.addToFile(str(self.q.get()) + str(self.iterations) + "\n")
+        self.fileWriter.addToFile(
+            str(message)  # noqa: E128
+            #  + str(self.iterations)  # noqa: E128
+            + "\n"
+        )  # noqa: E124
         self.iterations += 1
 
     def appendText(self, message):
