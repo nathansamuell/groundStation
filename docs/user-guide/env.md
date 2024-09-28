@@ -21,9 +21,21 @@ More information on these methods can be found [here!](https://www.geeksforgeeks
 Below is a table of all currently configureable .env variables. Some variables are **required** for GroundStation to work properly. Sensible defaults are setup in the [install instructions](installation.md) Some variables are used only in development or testing. They are included here in case they are useful for your own setup troubleshooting. More information about developer variables can be found [here](../developer-reference/dev-landing.md)
 
 
-|    Name                                | Required | Developer |
-|  :--------:                            | :------: | :-------: |
-| [USER_PASS](#env-variable-user_pass)   |     *    |           |
-| MOCK_SERIAL                            |     *    |           |
+|    Name                                          | Required | Developer |
+|  :--------:                                      | :------: | :-------: |
+| [USER_PASS](#env-variable-user_pass)             |     *    |           |
+| [MOCK_SERIAL](#env-variable-mock_serial)         |     *    |           |
+| [MOCK_SPORT_GS](#env-variable-mock_sport_gs)     |          |      *    |
+| [MOCK_SPORT_TEST](#env-variable-mock_sport_test) |          |      *    |
+
+## Sensible Defaults
+
+
 
 ### .env variable: USER_PASS
+
+### .env variable: MOCK_SERIAL
+
+### .env variable: MOCK_SPORT_GS
+
+### .env variable: MOCK_SPORT_TEST
