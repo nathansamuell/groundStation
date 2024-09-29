@@ -7,27 +7,26 @@
 // of the license can be found here: https://choosealicense.com/licenses/mit/
 // All above text must be included in any restribution.
 
-
 package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
+
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/lipgloss"
 	tea "github.com/charmbracelet/bubbletea"
-	"os"
-	"strings"
-	"strconv"
+	"github.com/charmbracelet/lipgloss"
 )
 
 // styles go below:
 var (
-    selectedStyle = lipgloss.NewStyle().
-        Foreground(lipgloss.Color("78")).
-        Bold(true) // Example styling
+	selectedStyle = lipgloss.NewStyle().
+		Foreground(lipgloss.Color("78")).
+		Bold(true) // Example styling
 )
-
 
 type command struct {
 	sudo    bool
@@ -46,12 +45,12 @@ type model struct {
 
 // the struct changes the key behavior and implements help menu!
 type keyMap struct {
-	Up     key.Binding
-	Down   key.Binding
-	Select key.Binding
+	Up      key.Binding
+	Down    key.Binding
+	Select  key.Binding
 	Execute key.Binding
-	Help   key.Binding
-	Quit   key.Binding
+	Help    key.Binding
+	Quit    key.Binding
 }
 
 var keys = keyMap{
@@ -66,7 +65,6 @@ var keys = keyMap{
 	Select: key.NewBinding(
 		key.WithKeys(" "),
 		key.WithHelp("␣/space", "select"),
-		
 	),
 	Execute: key.NewBinding(
 		key.WithKeys("enter"),
@@ -106,7 +104,7 @@ func generateCommandChoices() *[]command {
 	UPDATE_OS := command{
 		sudo:    true,
 		command: "apt",
-		args: []string{"update"},
+		args:    []string{"update"},
 		name:    "refresh apt",
 	}
 
@@ -131,9 +129,9 @@ func generateCommandChoices() *[]command {
 		name:    "shutdown pi",
 	}
 	OTHER := command{
-		sudo:   true,
-		name:   "other (jump to terminal)",
-		args:   []string{},
+		sudo: true,
+		name: "other (jump to terminal)",
+		args: []string{},
 	}
 
 	commandArray = append(commandArray, LAUNCH_GS)
