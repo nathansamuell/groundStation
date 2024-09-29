@@ -7,3 +7,4 @@ src/dataOut.tmp
 src/outputName.csv
 src/groundStation.egg-info
 .DS_Store
+node_modules
