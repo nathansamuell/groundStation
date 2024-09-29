@@ -14,11 +14,20 @@ import (
 	"fmt"
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
+	"github.com/charmbracelet/lipgloss"
 	tea "github.com/charmbracelet/bubbletea"
 	"os"
 	"strings"
 	"strconv"
 )
+
+// styles go below:
+var (
+    selectedStyle = lipgloss.NewStyle().
+        Foreground(lipgloss.Color("78")).
+        Bold(true) // Example styling
+)
+
 
 type command struct {
 	sudo    bool
@@ -190,8 +199,6 @@ func (m model) View() string {
 	// initial header!
 	s := "Welcome to GroundStation!\n\n"
 	order := 1
-	// user instructions
-	
 	s += "Options below:\n\n"
 	for i, command := range *m.choices {
 		// Is the cursor pointing at this choice?
@@ -201,9 +208,9 @@ func (m model) View() string {
 		}
 
 		// Is this choice selected?
-		checked := " " // not selected
+		checked := selectedStyle.Render(" ") // not selected
 		if _, ok := m.selected_option[i]; ok {
-			checked = strconv.Itoa(order)
+			checked = selectedStyle.Render(strconv.Itoa(order))
 			order++
 		}
 
