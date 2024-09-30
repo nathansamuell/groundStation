@@ -33,6 +33,7 @@ type command struct {
 	command string
 	args    []string
 	name    string
+	order   int
 }
 
 type model struct {
@@ -196,9 +197,16 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	// initial header!
 	s := "Welcome to GroundStation!\n\n"
-	order := 1
 	s += "Options below:\n\n"
+	var order int
+	for _, command := range *m.choices {
+		if command.order > order {
+			order = command.order
+		}
+	}
+
 	for i, command := range *m.choices {
+
 		// Is the cursor pointing at this choice?
 		cursor := " " // no cursor
 		if m.cursor == i {
@@ -208,8 +216,8 @@ func (m model) View() string {
 		// Is this choice selected?
 		checked := selectedStyle.Render(" ") // not selected
 		if _, ok := m.selected_option[i]; ok {
-			checked = selectedStyle.Render(strconv.Itoa(order))
-			order++
+			checked = selectedStyle.Render(strconv.Itoa(order + 1))
+			command.order = order + 1
 		}
 
 		s += fmt.Sprintf("%s [%s] Option %d: %s \n", cursor, checked, i, command.name)
