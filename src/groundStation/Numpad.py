@@ -111,8 +111,8 @@ class Numpad(QWidget):
         if userPin == enteredPassword:
             self.loginSuccess.emit()
             # self.loginSuccess.emit()
-            # print("login signal emit call reached")
+            print("login signal emit call reached")
         else:
             self.loginFailure.emit()
-            # print("login failure emit call reached")
+            print("login failure emit call reached")
         self.loginPin = ""

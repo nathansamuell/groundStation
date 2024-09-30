@@ -1,8 +1,10 @@
 venv
 src/groundStation/__pycache__
+tests/__pycache__
 .vscode
 .env
 src/dataOut.tmp
 src/outputName.csv
 src/groundStation.egg-info
 .DS_Store
+node_modules

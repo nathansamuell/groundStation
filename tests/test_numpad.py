@@ -15,7 +15,7 @@ from unittest.mock import patch
 
 sys.path.append("../app")
 
-from numpad import Numpad  # noqa: E402
+from groundStation.Numpad import Numpad  # noqa: E402
 from PyQt5.QtTest import QSignalSpy  # noqa: E402
 from PyQt5.QtWidgets import QApplication, QPushButton  # noqa: E402
 
