@@ -123,7 +123,10 @@ class RawText(QTextBrowser):
         self.timer.start(10)
 
     def dataOut(self):
-        message = str(self.q.get())
+        if not self.q:
+            message = "No data received..."
+        else:
+            message = str(self.q.get())
         if not (self.iterations < 20):
             self.appendText(message)
             self.iterations = 0
