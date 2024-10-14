@@ -77,11 +77,10 @@ class MainWindow(QMainWindow):
             self.statusSignal.emit(WindowStatus.RAW_TEXT)
 
         elif event.key() == Qt.Key_Escape:
-            if self.isDisplayOn:
-                self.rawText.fileWriter.writeEOF("outputName")
-
             # stops the listening thread and closes the app
             if self.status == WindowStatus.RAW_TEXT:
                 self.rawText.sc.stop()
+
+            self.rawText.fileWriter.writeEOF("outputName")
 
             self.close()
