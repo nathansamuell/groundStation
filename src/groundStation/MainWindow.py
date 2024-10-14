@@ -9,8 +9,6 @@
 
 
 # imports
-import time
-
 from enum import Enum
 
 from groundStation.Views import LoginWindow, RawText
@@ -84,5 +82,4 @@ class MainWindow(QMainWindow):
                 self.rawText.sc.stop()
 
             self.rawText.fileWriter.writeEOF("outputName")
-            time.sleep(0.5)
             self.close()
