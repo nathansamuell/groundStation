@@ -39,9 +39,10 @@ type command struct {
 type model struct {
 	choices         *[]command
 	cursor          int
-	selected_option map[int]struct{}
+	selected_option map[int]int
 	keys            keyMap
 	help            help.Model
+	totalOrder      int
 }
 
 // the struct changes the key behavior and implements help menu!
@@ -147,11 +148,11 @@ func generateCommandChoices() *[]command {
 
 func createInitialModel() model {
 	return model{
-		choices: generateCommandChoices(),
-		help:    help.New(),
-		keys:    keys,
-
-		selected_option: make(map[int]struct{}),
+		choices:         generateCommandChoices(),
+		help:            help.New(),
+		keys:            keys,
+		selected_option: make(map[int]int),
+		totalOrder:      0,
 	}
 }
 
@@ -161,8 +162,7 @@ func (m model) Init() tea.Cmd {
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	var cmd tea.Cmd
-	cmd = tea.EnterAltScreen
+	cmd := tea.EnterAltScreen
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch {
@@ -183,8 +183,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			_, ok := m.selected_option[m.cursor]
 			if ok {
 				delete(m.selected_option, m.cursor)
+				m.totalOrder--
+				(*m.choices)[m.cursor].order = m.totalOrder
 			} else {
-				m.selected_option[m.cursor] = struct{}{}
+				m.totalOrder++
+				(*m.choices)[m.cursor].order = m.totalOrder
+				m.selected_option[m.cursor] = m.totalOrder
 			}
 
 		case key.Matches(msg, m.keys.Help):
@@ -198,12 +202,6 @@ func (m model) View() string {
 	// initial header!
 	s := "Welcome to GroundStation!\n\n"
 	s += "Options below:\n\n"
-	var order int
-	for _, command := range *m.choices {
-		if command.order > order {
-			order = command.order
-		}
-	}
 
 	for i, command := range *m.choices {
 
@@ -216,8 +214,7 @@ func (m model) View() string {
 		// Is this choice selected?
 		checked := selectedStyle.Render(" ") // not selected
 		if _, ok := m.selected_option[i]; ok {
-			checked = selectedStyle.Render(strconv.Itoa(order + 1))
-			command.order = order + 1
+			checked = selectedStyle.Render(strconv.Itoa(command.order))
 		}
 
 		s += fmt.Sprintf("%s [%s] Option %d: %s \n", cursor, checked, i, command.name)
