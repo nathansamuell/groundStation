@@ -14,9 +14,14 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
+
+	"groundStation-OS-autostart/commands"
 
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
+	"github.com/charmbracelet/bubbles/spinner"
+	"github.com/charmbracelet/bubbles/timer"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -26,6 +31,16 @@ var (
 	selectedStyle = lipgloss.NewStyle().
 		Foreground(lipgloss.Color("78")).
 		Bold(true) // Example styling
+)
+
+const timeout = time.Second * 1
+
+type viewState int
+
+const (
+	Loading viewState = iota
+	Commands
+	NoCommands
 )
 
 type command struct {
@@ -43,6 +58,9 @@ type model struct {
 	keys            keyMap
 	help            help.Model
 	totalOrder      int
+	loading         spinner.Model
+	loadTimer       timer.Model
+	displayState    viewState
 }
 
 // the struct changes the key behavior and implements help menu!
@@ -105,29 +123,25 @@ func generateCommandChoices() *[]command {
 
 	UPDATE_OS := command{
 		sudo:    true,
-		command: "apt",
-		args:    []string{"update"},
+		command: "apt update",
 		name:    "refresh apt",
 	}
 
 	UPGRADE_OS := command{
 		sudo:    true,
-		command: "apt",
-		args:    []string{"upgrade", "-y"},
+		command: "apt upgrade -y",
 		name:    "upgrade packages",
 	}
 
 	REBOOT := command{
 		sudo:    false,
 		command: "reboot",
-		args:    []string{},
 		name:    "reboot pi",
 	}
 
 	POWEROFF := command{
 		sudo:    false,
 		command: "poweroff",
-		args:    []string{},
 		name:    "shutdown pi",
 	}
 	OTHER := command{
@@ -153,12 +167,18 @@ func createInitialModel() model {
 		keys:            keys,
 		selected_option: make(map[int]int),
 		totalOrder:      0,
+		loading:         spinner.NewModel(),
+		loadTimer:       timer.NewWithInterval(timeout, time.Millisecond),
+		displayState:    Loading,
 	}
 }
 
 // bubbletea functions
 func (m model) Init() tea.Cmd {
-	return nil
+	cmd1 := m.loading.Tick
+	cmd2 := m.loadTimer.Init()
+
+	return tea.Batch(cmd1, cmd2)
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -194,11 +214,42 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case key.Matches(msg, m.keys.Help):
 			m.help.ShowAll = !m.help.ShowAll
 		}
+	case spinner.TickMsg:
+		var cmd tea.Cmd
+		m.loading, cmd = m.loading.Update(msg)
+		return m, cmd
+
+	case timer.TickMsg:
+		var cmd tea.Cmd
+		m.loadTimer, cmd = m.loadTimer.Update(msg)
+		return m, cmd
+
+	case timer.TimeoutMsg:
+		return m, commands.CheckForPersistingCommands
+
+	case commands.FoundCommands:
+		if !msg.Commands {
+			m.displayState = NoCommands
+		} else {
+			m.displayState = Commands
+		}
 	}
+
 	return m, cmd
 }
 
-func (m model) View() string {
+func (m model) LoadingView() string {
+	s := m.loading.View() + " Loading GroundStation Launcher..."
+	// s += m.loadTimer.View()
+	return s
+}
+
+func (m model) CommandsView() string {
+	s := m.loading.View() + " Executing remaining commands..."
+	return s
+}
+
+func (m model) NoCommandsView() string {
 	// initial header!
 	s := "Welcome to GroundStation!\n\n"
 	s += "Options below:\n\n"
@@ -224,6 +275,19 @@ func (m model) View() string {
 	height := 15 - strings.Count(s, "\n") - strings.Count(helpView, "\n")
 
 	return s + strings.Repeat("\n", height) + helpView
+}
+
+func (m model) View() string {
+	switch m.displayState {
+	case Loading:
+		return m.LoadingView()
+	case Commands:
+		return m.CommandsView()
+	case NoCommands:
+		return m.NoCommandsView()
+	}
+
+	return "Error: press q to quit"
 }
 
 func main() {
