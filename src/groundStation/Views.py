@@ -124,7 +124,7 @@ class RawText(QTextBrowser):
 
     def dataOut(self):
         try:
-            message = str(self.q.get())
+            message = str(self.q.get(block=False))
 
         except Exception as e:
             message = "No data received!"
