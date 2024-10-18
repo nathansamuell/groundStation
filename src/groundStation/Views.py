@@ -127,7 +127,7 @@ class RawText(QTextBrowser):
             message = str(self.q.get(block=False))
 
         except queue.Empty as e:
-            message = "No data received! + str(e)"
+            message = "No data received!" + str(e)
         
         
         # if not self.q:
