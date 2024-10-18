@@ -124,7 +124,7 @@ class RawText(QTextBrowser):
 
     def dataOut(self):
         try:
-            message = str(self.q.get(timeout=10))
+            message = str(self.q.get(timeout=1))
 
         except queue.Empty as e:
             message = "No data received!" + str(e)
