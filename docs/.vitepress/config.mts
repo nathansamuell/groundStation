@@ -36,6 +36,8 @@ export default defineConfig({
 
 function nav(): DefaultTheme.NavItem[] {
   return [
+    { text: "About Us", link: "/about/about", activeMatch: "/about/"},
+    // { text: "News", link: "/news/news", activeMatch: "/news/"},
     { text: "For Users", link: "/user-guide/user-landing", activeMatch: "/user-guide/" },
     { text: "For Developers", link: "/developer-reference/dev-landing", activeMatch: "/developer-reference/" }
   ]
