@@ -49,11 +49,11 @@ class MainWindow(QMainWindow):
 
     def updateStatus(self, status):
         if status == WindowStatus.RAW_TEXT:
-            print("update status method called")
+            # print("update status method called")
             self.status = WindowStatus.RAW_TEXT
             self.windowStack.setCurrentIndex(1)
         elif status == WindowStatus.LOGIN:
-            print("login window status called")
+            # print("login window status called")
             self.status = WindowStatus.LOGIN
             self.windowStack.setCurrentIndex(0)
 
