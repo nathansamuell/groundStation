@@ -16,3 +16,5 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES: "python:E402"
+
+          ISORT_OPTIONS: "--profile black --line-length 88"
