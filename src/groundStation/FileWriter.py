@@ -31,4 +31,4 @@ class FileWriter:
         with open(outputFileName, "w") as file:
             file.write(flightData)
 
-        os.remove("dataOut.tmp")
+        os.remove(self.tempFile)

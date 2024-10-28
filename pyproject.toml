@@ -16,3 +16,14 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Development Status :: 2 - Pre-Alpha",
 ]
+
+[tool.setuptools]
+packages = { find = { where = ["src"] } }
+include-package-data = true
+
+[tool.setuptools.package-data]
+aiaa_logo = ["cropped-aiaaweblogo-2.png"]
+
+[project.urls]
+Homepage = "https://nathansamuell.github.io/groundStation/"
+Issues = "https://github.com/nathansamuell/groundStation/issues"

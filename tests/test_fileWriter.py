@@ -13,11 +13,11 @@ import os
 import sys
 import unittest
 
-sys.path.append("../app")
+sys.path.append("../src")
 
 from pathlib import Path  # noqa: E402
 
-from fileWriter import FileWriter  # noqa: E402
+from groundStation.FileWriter import FileWriter  # noqa: E402
 
 
 class TestFileWriter(unittest.TestCase):
