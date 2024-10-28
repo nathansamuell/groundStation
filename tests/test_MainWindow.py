@@ -9,40 +9,36 @@
 
 
 # imports
-import unittest
-
+import pytest
 from groundStation.MainWindow import MainWindow, WindowStatus
 from PyQt5.QtTest import QSignalSpy
 from PyQt5.QtWidgets import QApplication
 
 
-class TestMainWindow(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.testApp = QApplication([])
-
-    def setUp(self):
-        self.mainWindow = MainWindow()
-        self.stateListener = QSignalSpy(self.mainWindow.statusSignal)
-
-    def test_initial_state(self):
-        self.mainWindow.initGUI()
-        self.assertEqual(len(self.stateListener), 1)  # check for signal emission
-        self.assertEqual(
-            self.mainWindow.status, WindowStatus.LOGIN
-        )  # check for the correct signal
-
-    def test_tsm_login_success(self):
-        self.mainWindow.statusSignal.emit(WindowStatus.RAW_TEXT)
-        self.assertEqual(len(self.stateListener), 1)  # only one signal emitted!
-        self.assertEqual(
-            self.mainWindow.status, WindowStatus.RAW_TEXT
-        )  # TODO: change to default view once implemented
-
-    def tearDown(self):
-        self.mainWindow.close()
-        self.testApp.processEvents()
+@pytest.fixture(scope="module")
+def test_app():
+    app = QApplication([])
+    yield app
 
 
-if __name__ == "__main__":
-    unittest.main()
+@pytest.fixture
+def main_window(test_app):
+    window = MainWindow()
+    yield window
+    window.close()
+
+
+def test_initial_state(main_window):
+    state_listener = QSignalSpy(main_window.statusSignal)
+    main_window.initGUI()
+    assert len(state_listener) == 1  # check for signal emission
+    assert main_window.status == WindowStatus.LOGIN  # check for the correct signal
+
+
+def test_tsm_login_success(main_window):
+    state_listener = QSignalSpy(main_window.statusSignal)
+    main_window.statusSignal.emit(WindowStatus.RAW_TEXT)
+    assert len(state_listener) == 1  # only one signal emitted!
+    assert (
+        main_window.status == WindowStatus.RAW_TEXT
+    )  # TODO: change to default view once implemented
