@@ -9,3 +9,4 @@ src/groundStation.egg-info
 .DS_Store
 node_modules
 dist
+.pypirc
