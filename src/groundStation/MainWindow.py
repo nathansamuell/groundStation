@@ -80,6 +80,6 @@ class MainWindow(QMainWindow):
             # stops the listening thread and closes the app
             if self.status == WindowStatus.RAW_TEXT:
                 self.rawText.sc.stop()
+                self.rawText.fileWriter.writeEOF("outputName")
 
-            self.rawText.fileWriter.writeEOF("outputName")
             self.close()
