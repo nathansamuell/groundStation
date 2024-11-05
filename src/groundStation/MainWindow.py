@@ -49,11 +49,11 @@ class MainWindow(QMainWindow):
 
     def updateStatus(self, status):
         if status == WindowStatus.RAW_TEXT:
-            print("update status method called")
+            # print("update status method called")
             self.status = WindowStatus.RAW_TEXT
             self.windowStack.setCurrentIndex(1)
         elif status == WindowStatus.LOGIN:
-            print("login window status called")
+            # print("login window status called")
             self.status = WindowStatus.LOGIN
             self.windowStack.setCurrentIndex(0)
 
@@ -77,11 +77,9 @@ class MainWindow(QMainWindow):
             self.statusSignal.emit(WindowStatus.RAW_TEXT)
 
         elif event.key() == Qt.Key_Escape:
-            if self.isDisplayOn:
-                self.rawText.fileWriter.writeEOF("outputName")
-
             # stops the listening thread and closes the app
             if self.status == WindowStatus.RAW_TEXT:
                 self.rawText.sc.stop()
+                self.rawText.fileWriter.writeEOF("outputName")
 
             self.close()

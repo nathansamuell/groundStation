@@ -10,3 +10,6 @@ src/groundStation.egg-info
 docs/.vitepress/dist
 docs/.vitepress/cache
 node_modules
+node_modules
+dist
+.pypirc
