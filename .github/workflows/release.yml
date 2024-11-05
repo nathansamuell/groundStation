@@ -1,0 +1,42 @@
+name: Release FlightControl
+
+on:
+  push:
+    # Trigger only when a tag is pushed to the main branch
+    tags:
+      - 'v*'  # Matches any tag like v1.0.0, v1.2.3, etc.
+    branches:
+      - 'main'  # Only allow publishing for tags on the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      # Install Hatch
+      - name: Install Hatch
+        run: |
+          python -m pip install --upgrade pip
+          pip install hatch
+
+      # Build the package using Hatch
+      - name: Build package
+        run: |
+          hatch build
+
+      # Publish to PyPI using Hatch
+      - name: Publish to PyPI
+        run: |
+          hatch publish --repository pypi
+        env:
+          HATCH_PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
