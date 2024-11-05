@@ -15,9 +15,9 @@ import threading
 
 # app class/qt imports
 from dotenv import load_dotenv
-from groundStation.FileWriter import FileWriter
-from groundStation.Numpad import Numpad
-from groundStation.SerialCommunicator import SerialCommunicator
+from flightctl.FileWriter import FileWriter
+from flightctl.Numpad import Numpad
+from flightctl.SerialCommunicator import SerialCommunicator
 from PyQt5.QtCore import QTimer
 
 # qt imports

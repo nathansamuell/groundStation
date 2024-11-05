@@ -6,3 +6,5 @@
 # More information on the MIT license as well as a complete copy
 # of the license can be found here: https://choosealicense.com/licenses/mit/
 # All above text must be included in any restribution.
+
+__version__ = 'v1.0.0'
