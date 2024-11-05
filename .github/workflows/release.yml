@@ -19,7 +19,19 @@ jobs:
             # IMPORTANT: this permission is mandatory for trusted publishing
             id-token: write
         steps:
-            # retrieve your distributions here
+            - uses: actions/checkout@v2
+
+            - name: Set up Python
+              uses: actions/setup-python@v2
+              with:
+                python-version: '3.x'
+
+            - name: Install Hatch
+              run: pip install hatch
+
+            - name: Build distributions
+              run: |
+                    hatch build
       
             - name: Publish package distributions to PyPI
               uses: pypa/gh-action-pypi-publish@release/v1
