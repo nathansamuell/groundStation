@@ -5,8 +5,6 @@ on:
     # Trigger only when a tag is pushed to the main branch
     tags:
       - 'v*'  # Matches any tag like v1.0.0, v1.2.3, etc.
-    branches:
-      - 'main'  # Only allow publishing for tags on the main branch
 
 jobs:
     pypi-publish:
