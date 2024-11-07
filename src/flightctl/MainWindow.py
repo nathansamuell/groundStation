@@ -9,7 +9,10 @@
 
 
 # imports
+import os
+
 from enum import Enum
+from dotenv import load_dotenv
 
 from flightctl.Views import LoginWindow, RawText
 from PyQt5.QtCore import Qt, pyqtSignal
@@ -30,22 +33,37 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # window level setup
         self.isDisplayOn = False
         self.windowStack = QStackedLayout()
-        self.loginWindow = LoginWindow()
         self.statusSignal.connect(self.updateStatus)
-        self.loginWindow.numpad.loginSuccess.connect(self.loginSuccess)
-        self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
-
-    def initGUI(self):
-        self.windowStack.addWidget(self.loginWindow)
-
         mainWidget = QWidget()
         mainWidget.setLayout(self.windowStack)
+
+        # initialize modules
+        self.initGUI()
+        self.initNP()
+        self.initFW()
+        self.initSC()
+        
+    def initGUI(self):
+        self.loginWindow = LoginWindow()
+        self.windowStack.addWidget(self.loginWindow)
+
         self.setCentralWidget(mainWidget)
         self.setFixedSize(800, 480)
         self.statusSignal.emit(WindowStatus.LOGIN)
         # self.showFullScreen()
+
+    def initNP(self):
+        self.loginWindow.numpad.loginSuccess.connect(self.loginSuccess)
+        self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
+
+    def initFW:  # sets up FileWriter!
+        
+
+    def initSC:  # sets up SerialCommunicator!
+
 
     def updateStatus(self, status):
         if status == WindowStatus.RAW_TEXT:
