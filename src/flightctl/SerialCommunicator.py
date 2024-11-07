@@ -33,11 +33,14 @@
 
 # imports
 import threading
-
 import serial  # noqa: F401
 
+from PyQt5.QtCore import QObject, pyqtSignal
 
-class SerialCommunicator:
+
+class SerialCommunicator(QObject):
+    dataSignal = pyqtSignal(str)
+
     def __init__(self, sp, br):
         serialPort = sp  # noqa: F841
         baudRate = br  # noqa: F841
@@ -58,10 +61,9 @@ class SerialCommunicator:
 
     def start(self, queue):
         while not self.stopEvent.is_set():
-            message = self.ser.readline().decode("utf-8").rstrip()
+            rocketData = self.ser.readline().decode("utf-8").rstrip()
             # message = "Testing message read "  # Swap with the previous line to use the serial monitor
-            if not message == "":
-                queue.put(message)
+            dataSignal.emit(rocketData)
 
     def stop(self):
         self.stopEvent.set()
