@@ -42,6 +42,7 @@ class SerialCommunicator(QObject):
     dataSignal = pyqtSignal(str)
 
     def __init__(self, sp, br):
+        super().__init__()  # needed to inherit from any Q class
         serialPort = sp  # noqa: F841
         baudRate = br  # noqa: F841
         self.ser = serial.Serial(serialPort, baudRate)
@@ -49,9 +50,17 @@ class SerialCommunicator(QObject):
         self.stopEvent = threading.Event()
 
     def read(self):
-        codedBits = self.ser.readline()  # noqa: E1101
-        bits = codedBits.decode()
-        return bits
+        while not self.stopEvent.is_set():
+            try:
+                rocketData = self.ser.readline().decode("utf-8").rstrip()
+                if rocketData == b'':
+                    rocketData = "no data"
+
+                self.dataSignal.emit(rocketData)
+
+            except serial.serialutil.PortNotOpenError:
+                rocketData = "FLIGHTCTL: ERROR: Serial Port Not Open!"
+                self.dataSignal.emit(rocketData)
 
     def transmit(self, message):
         self.ser.write(message.encode("utf-8"))  # noqa: E1101
@@ -59,11 +68,9 @@ class SerialCommunicator(QObject):
     def write(self, message):
         return message
 
-    def start(self, queue):
-        while not self.stopEvent.is_set():
-            rocketData = self.ser.readline().decode("utf-8").rstrip()
-            # message = "Testing message read "  # Swap with the previous line to use the serial monitor
-            dataSignal.emit(rocketData)
+    def start(self):
+        self.readThread = threading.Thread(target=self.read)
+        self.readThread.start()
 
     def stop(self):
         self.stopEvent.set()
