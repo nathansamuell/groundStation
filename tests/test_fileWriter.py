@@ -13,7 +13,7 @@ import os
 from pathlib import Path  # noqa: E402
 
 import pytest
-from groundStation.FileWriter import FileWriter  # noqa: E402
+from flightctl.FileWriter import FileWriter  # noqa: E402
 
 
 @pytest.fixture

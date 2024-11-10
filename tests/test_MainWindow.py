@@ -10,7 +10,7 @@
 
 # imports
 import pytest
-from groundStation.MainWindow import MainWindow, WindowStatus
+from flightctl.MainWindow import MainWindow, WindowStatus
 from PyQt5.QtTest import QSignalSpy
 from PyQt5.QtWidgets import QApplication
 

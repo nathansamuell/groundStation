@@ -1,11 +1,11 @@
 venv
-src/groundStation/__pycache__
+src/flightctl/__pycache__
 tests/__pycache__
 .vscode
 .env
 src/dataOut.tmp
 src/outputName.csv
-src/groundStation.egg-info
+src/flightctl.egg-info
 .DS_Store
 docs/.vitepress/dist
 docs/.vitepress/cache
