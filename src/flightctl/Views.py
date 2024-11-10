@@ -95,26 +95,23 @@ class RawText(QTextBrowser):
         self.timer = QTimer(self)
         self.fileWriter = FileWriter()
         # find the right serial port
-        load_dotenv()
-        mock = os.getenv("MOCK_SERIAL")
-        if mock == "True":
-            port = os.getenv("MOCK_SPORT_GS")
-            self.sc = SerialCommunicator(port, 9600)
-        else:
-            port = os.getenv("SERIAL_PORT")
-            self.sc = SerialCommunicator(port, 9600)
+        # load_dotenv()
+        # mock = os.getenv("MOCK_SERIAL")
+        # if mock == "True":
+        #     port = os.getenv("MOCK_SPORT_GS")
+        #     self.sc = SerialCommunicator(port, 9600)
+        # else:
+        #     port = os.getenv("SERIAL_PORT")
+        #     self.sc = SerialCommunicator(port, 9600)
 
         # connections and variable instantiations
-        self.timer.timeout.connect(self.dataOut)
+        # self.timer.timeout.connect(self.dataOut)
         self.timerRunning = False
         self.iterations = 0
-        self.q = queue.Queue()
 
         # setup for before run
         self.setPlainText("This is the starting message!")
         self.displayLoop()
-        listenThread = threading.Thread(target=self.sc.start, args=[self.q])
-        listenThread.start()
 
     def displayLoop(self):
         if not self.timer.isActive():
@@ -122,27 +119,27 @@ class RawText(QTextBrowser):
 
         self.timer.start(10)
 
-    def dataOut(self):
-        try:
-            message = str(self.q.get(timeout=1))
+    # def dataOut(self):
+    #     try:
+    #         message = str(self.q.get(timeout=1))
 
-        except queue.Empty as e:
-            message = "No data received!" + str(e)
+    #     except queue.Empty as e:
+    #         message = "No data received!" + str(e)
 
-        # if not self.q:
-        #     message = "No data received..."
-        # else:
-        #     message = str(self.q.get())
-        if not (self.iterations < 20):
-            self.appendText(message)
-            self.iterations = 0
+    #     # if not self.q:
+    #     #     message = "No data received..."
+    #     # else:
+    #     #     message = str(self.q.get())
+    #     if not (self.iterations < 20):
+    #         self.appendText(message)
+    #         self.iterations = 0
 
-        self.fileWriter.addToFile(
-            str(message)  # noqa: E128
-            #  + str(self.iterations)  # noqa: E128
-            + "\n"
-        )  # noqa: E124
-        self.iterations += 1
+    #     self.fileWriter.addToFile(
+    #         str(message)  # noqa: E128
+    #         #  + str(self.iterations)  # noqa: E128
+    #         + "\n"
+    #     )  # noqa: E124
+    #     self.iterations += 1
 
     def appendText(self, message):
         self.append(message)

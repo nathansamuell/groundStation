@@ -66,7 +66,7 @@ class MainWindow(QMainWindow):
         self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
 
     def initFW(self):  # sets up FileWriter!
-        self.placeholder = "remove me when you write this method"
+        self.fw = FileWriter()
 
 
     def initSC(self):  # sets up SerialCommunicator!
@@ -88,10 +88,18 @@ class MainWindow(QMainWindow):
     def dataHandler(self, data):
         # send data to each view 
         match self.status:
-            case WindowStatus.RAW_TEXT:
-                self.rawText.appendText(data)
+            case WindowStatus.LOGIN:
+                pass
 
-        #FIXME need to add file writing capability
+            case WindowStatus.RAW_TEXT:
+                self.rawText.appendText(str(data))
+
+        #FIXME need to add file writing capability, code below doesn't work
+        # self.fw.addToFile(
+        #     str(data)  # noqa: E128
+        #     + "\n"
+        # )  # noqa: E124
+
 
     def updateStatus(self, status):
         if status == WindowStatus.RAW_TEXT:
@@ -108,6 +116,7 @@ class MainWindow(QMainWindow):
         self.rawText = RawText()
         self.windowStack.addWidget(self.rawText)
         self.statusSignal.emit(WindowStatus.RAW_TEXT)
+        # self.sc.start()
 
     def loginFailure(self):
         self.loginWindow.enterPinText.setText("Incorrect Pin--Try Again: ")
@@ -118,7 +127,7 @@ class MainWindow(QMainWindow):
             self.statusSignal.emit(WindowStatus.DEFAULT)
 
         elif event.key() == Qt.Key_2:
-            self.statusSignal.emit(WindowStatus.FLIGHT_TIME)
+            self.statusSignal.emit(WindowStatus.LOGIN)
 
         elif event.key() == Qt.Key_3:
             self.statusSignal.emit(WindowStatus.RAW_TEXT)
@@ -130,6 +139,6 @@ class MainWindow(QMainWindow):
             # stops the listening thread and closes the app
             if self.status == WindowStatus.RAW_TEXT:
                 self.sc.stop()
-                # self.rawText.fileWriter.writeEOF("outputName")
+                self.fw.writeEOF("outputName")
 
             self.close()
