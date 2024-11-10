@@ -48,7 +48,7 @@ const members = [
 
 # About Us
 
-GroundStation started as Nathan's solo project for AIAA-UH to perform some menial rocket monitoring tasks. It has since expanded into a comprehensive application in its own right, developed and engineered by the Avionics Team @ AIAA-UH!
+FlightControl started as Nathan's solo project for AIAA-UH to perform some menial rocket monitoring tasks. It has since expanded into a comprehensive application in its own right, developed and engineered by the Avionics Team @ AIAA-UH!
 
 
 ## Say Hello to the Dev Team!

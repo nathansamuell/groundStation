@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "GroundStation"
+  name: "FlightControl"
   text: "Rocket Monitoring Reimagined 🚀"
   tagline: Developed by Nathan Samuell for AIAA-UH
   actions:
@@ -15,7 +15,7 @@ hero:
       link:
     - theme: alt
       text: GitHub
-      link: https://github.com/nathansamuell/groundStation
+      link: https://github.com/nathansamuell/FlightControl
 
 features:
   - title: Real-Time monitoring

@@ -1,6 +1,6 @@
-# What is GroundStation?
+# What is FlightControl?
 
-Welcome to GroundStation! GroundStation is a batteries included rocket-montoring application designed to meet team needs in competitive amateur rocketry. 
+Welcome to FlightControl! FlightControl is a batteries included rocket-montoring application designed to meet team needs in competitive amateur rocketry. 
 
 #### Current Features:
 
@@ -20,4 +20,4 @@ Welcome to GroundStation! GroundStation is a batteries included rocket-montoring
 
 ### Other Information:
 
-The project source code can be found [here](https://github.com/nathansamuell/groundStation). The project is licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License). If you're interested in contributing or forking the project for your own team, check out the [GroundStation Developer Reference](../developer-reference/dev-landing.md).
+The project source code can be found [here](https://github.com/nathansamuell/FlightControl). The project is licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License). If you're interested in contributing or forking the project for your own team, check out the [FlightControl Developer Reference](../developer-reference/dev-landing.md).

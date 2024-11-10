@@ -18,17 +18,17 @@ os.getenv("<variable-name-here")
 
 More information on these methods can be found [here!](https://www.geeksforgeeks.org/how-to-create-and-use-env-files-in-python/#)
 
-GroundStation uses variables defined in this way to store other options about its runtime configuration. Many are only used for testing or developer usage, but there are some that most users will probably need to set and few that are *required* for using GroundStation. 
+FlightControl uses variables defined in this way to store other options about its runtime configuration. Many are only used for testing or developer usage, but there are some that most users will probably need to set and few that are *required* for using FlightControl. 
 
 ## Sensible Defaults
-GroundStation will eventually ship with a .env file with *sensible defaults*. When determining the sensible defaults, we assumed a few things:
+FlightControl will eventually ship with a .env file with *sensible defaults*. When determining the sensible defaults, we assumed a few things:
 
 - Most users are using in the intended way
 - Most users don't have extenuating setup circumstances
 - Most users aren't interested in extra tinkering
 
 ::: info
-GroundStation **won't** ever ship with a default password. Because it is connected to a rocket, we take the security of our application during runtime seriously. Don't worry -- the passcode is set very quickly in the default [install process.](installation.md)
+FlightControl **won't** ever ship with a default password. Because it is connected to a rocket, we take the security of our application during runtime seriously. Don't worry -- the passcode is set very quickly in the default [install process.](installation.md)
 :::
 
 With these assumptions in mind, the sensible defaults only really set two things:
@@ -36,10 +36,10 @@ With these assumptions in mind, the sensible defaults only really set two things
 1. The default serial port is set to the default Raspberry Pi USB serial port. 
 2. The app is configured to run on real hardware tracking a rocket -- not a development environment.
 
-If these defaults don't fit your needs, be sure to keep reading and check out all of the configuration options you can use out of the box. If there is a feature you need for your team to succeed, make an issue on [GitHub](https://www.github.com/nathansamuell/groundStation/issues) or fork the project to hack on and check out the [Developer Reference](../developer-reference/dev-landing.md).
+If these defaults don't fit your needs, be sure to keep reading and check out all of the configuration options you can use out of the box. If there is a feature you need for your team to succeed, make an issue on [GitHub](https://www.github.com/nathansamuell/FlightControl/issues) or fork the project to hack on and check out the [Developer Reference](../developer-reference/dev-landing.md).
 
-## GroundStation's .env Variables
-Below is a table of all currently configureable .env variables. Some variables are **required** for GroundStation to work properly. Sensible defaults are setup in the [install instructions](installation.md) Some variables are used only in development or testing. They are included here in case they are useful for troubleshooting your own installation or customizing for your own situation. More information about developer variables can be found [here](../developer-reference/dev-landing.md)
+## FlightControl's .env Variables
+Below is a table of all currently configureable .env variables. Some variables are **required** for FlightControl to work properly. Sensible defaults are setup in the [install instructions](installation.md) Some variables are used only in development or testing. They are included here in case they are useful for troubleshooting your own installation or customizing for your own situation. More information about developer variables can be found [here](../developer-reference/dev-landing.md)
 
 
 |    Name                                          | Required | Developer | Default included? |    Type     |
@@ -58,7 +58,7 @@ Below is a table of all currently configureable .env variables. Some variables a
 * [ ] Developer
 * [ ] Set By Default
   
-This variable is a string representation of a numerical passcode for GroundStation. It can be however many digits you desire.
+This variable is a string representation of a numerical passcode for FlightControl. It can be however many digits you desire.
 
 Sample Setting:
 
@@ -73,7 +73,7 @@ This number will be converted to an integer under the hood and compared against 
 * [ ] Developer
 * [x] Set By Default
 
-This variable holds the filepath of the serial port that GroundStation expects to read rocket data from. It is not techically required in a testing setting (see [MOCK_SPORT_GS](#env-variable-mock_sport_gs)), but it is configured by default because it **IS** needed to run on a target machine during launch.
+This variable holds the filepath of the serial port that FlightControl expects to read rocket data from. It is not techically required in a testing setting (see [MOCK_SPORT_GS](#env-variable-mock_sport_gs)), but it is configured by default because it **IS** needed to run on a target machine during launch.
 
 Sample Setting:
 ```json

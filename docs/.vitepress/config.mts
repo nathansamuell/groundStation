@@ -2,11 +2,11 @@ import { defineConfig, type DefaultTheme } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "GroundStation",
+  title: "FlightControl",
   description: "Study your rockets with ease",
 
   // base url-- https://vitepress.dev/reference/site-config#base
-  base: "/groundStation/",
+  base: "/flightcontrol/",
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -23,7 +23,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: "github",
-        link: "https://github.com/nathansamuell/groundStation",
+        link: "https://github.com/nathansamuell/FlightControl",
       },
     ],
 
@@ -49,12 +49,12 @@ function sidebarUser(): DefaultTheme.SidebarItem[] {
       text: "Quickstart",
       collapsed: false,
       items: [
-        {text: "What is GroundStation?", link:"/user-landing"},
+        {text: "What is FlightControl?", link:"/user-landing"},
         {text: "Installation", link:"/installation"},
       ]
     },
     {
-      text: "Configuring GroundStation",
+      text: "Configuring FlightControl",
       collapsed: false,
       items: [
         {text: "Using the .env file", link:"/env?"},
@@ -68,7 +68,7 @@ function sidebarUser(): DefaultTheme.SidebarItem[] {
 function sidebarDev(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: "Ground Station Developer Reference",
+      text: "FlightControl Developer Reference",
       collapsed: false,
       items: [
         {text: "Welcome!", link:"/dev-landing"}
