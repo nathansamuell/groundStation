@@ -51,7 +51,7 @@ class SerialCommunicator(QObject):
         except serial.serialutil.SerialException:
             rocketData = "FLIGHTCTL: ERROR: Serial Port Not Open!"
             self.dataSignal.emit(rocketData)
-
+        self.readThread = threading.Thread(target=self.read)
         self.stopEvent = threading.Event()
 
     def read(self):
@@ -65,10 +65,12 @@ class SerialCommunicator(QObject):
 
             except serial.serialutil.PortNotOpenError:
                 rocketData = "FLIGHTCTL: ERROR: Serial Port Not Open!"
+                self.stopEvent.set()
                 self.dataSignal.emit(rocketData)
 
             except AttributeError as e:
                 rocketData = "FLIGHTCTL: ERROR: " + str(e)
+                self.stopEvent.set()
                 self.dataSignal.emit(rocketData)
 
     def transmit(self, message):
@@ -78,7 +80,7 @@ class SerialCommunicator(QObject):
         return message
 
     def start(self):
-        self.readThread = threading.Thread(target=self.read)
+        self.stopEvent.clear()
         self.readThread.start()
 
     def stop(self):
