@@ -95,7 +95,7 @@ class MainWindow(QMainWindow):
                 pass
 
             case WindowStatus.RAW_TEXT:
-                self.rawText.appendText(str(data))
+                self.rawText.appendText(data)
 
         #FIXME need to add file writing capability, code below doesn't work
         # self.fw.addToFile(
