@@ -40,39 +40,48 @@ from PyQt5.QtCore import QObject, pyqtSignal
 
 
 class SerialCommunicator(QObject):
-    dataSignal = pyqtSignal(str)
+    dataSignal = pyqtSignal(list)
 
     def __init__(self, sp, br):
         super().__init__()  # needed to inherit from any Q class
         serialPort = sp  # noqa: F841
         baudRate = br  # noqa: F841
         try:
-            self.ser = serial.Serial(serialPort, baudRate)
+            self.ser = serial.Serial(serialPort, baudRate, timeout=1)
 
         except serial.serialutil.SerialException:
-            rocketData = "FLIGHTCTL: ERROR: Serial Port Not Open!"
-            self.dataSignal.emit(rocketData)
+            rocketPacket = "FLIGHTCTL: ERROR: Serial Port Not Open!"
+            self.dataSignal.emit(rocketPacket)
         self.readThread = threading.Thread(target=self.read)
         self.stopEvent = threading.Event()
 
     def read(self):
+        # while the thread is running,
         while not self.stopEvent.is_set():
-            try:
-                rocketData = self.ser.readline().decode("utf-8").rstrip()
-                if rocketData == b'':
-                    rocketData = "no data"
+            
+            # attempt to collect five data collections (keeps our number of pyqt5 signals down)
+            for i in range(5):
+                rocketData = []   # holds our list of five correctly picked data
+                rocketError = []  # holds any error messages. using a list plays nice with the data handler in MainWindow
+                try:
+                    rocketPacket = self.ser.readline().decode("utf-8").rstrip()  # read from rocket
+                    if rocketPacket == b'':  # empty string byte means no data was received before timeout
+                        rocketPacket = "no data"  # FIXME: we need a standardized signal for this
 
-                self.dataSignal.emit(rocketData)
+                    rocketData.append(rocketPacket)  # add to list to send to app!
 
-            except serial.serialutil.PortNotOpenError:
-                rocketData = "FLIGHTCTL: ERROR: Serial Port Not Open!"
-                self.stopEvent.set()
-                self.dataSignal.emit(rocketData)
+                except serial.serialutil.PortNotOpenError:
+                    rocketPacket = "FLIGHTCTL: ERROR: Serial Port Not Open!"
+                    self.stopEvent.set()
+                    self.dataSignal.emit(rocketPacket)
 
-            except AttributeError as e:
-                rocketData = "FLIGHTCTL: ERROR: " + str(e)
-                self.stopEvent.set()
-                self.dataSignal.emit(rocketData)
+                except AttributeError as e:
+                    rocketPacket = "FLIGHTCTL: ERROR: " + str(e)
+                    self.stopEvent.set()
+                    rocketError.append(rocketPacket)
+                    self.dataSignal.emit(rocketError)
+
+            self.dataSignal.emit(rocketData)  # if no errors occur then send the list!
 
         while self.stopEvent.is_set():
             self.dataSignal.emit(rocketData)
