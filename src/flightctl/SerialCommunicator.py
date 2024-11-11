@@ -67,6 +67,10 @@ class SerialCommunicator(QObject):
                 rocketData = "FLIGHTCTL: ERROR: Serial Port Not Open!"
                 self.dataSignal.emit(rocketData)
 
+            except AttributeError as e:
+                rocketData = "FLIGHTCTL: ERROR: " + str(e)
+                self.dataSignal.emit(rocketData)
+
     def transmit(self, message):
         self.ser.write(message.encode("utf-8"))  # noqa: E1101
 
