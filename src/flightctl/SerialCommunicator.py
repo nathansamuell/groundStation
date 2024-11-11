@@ -32,6 +32,7 @@
 
 
 # imports
+import time
 import threading
 import serial  # noqa: F401
 
@@ -72,6 +73,12 @@ class SerialCommunicator(QObject):
                 rocketData = "FLIGHTCTL: ERROR: " + str(e)
                 self.stopEvent.set()
                 self.dataSignal.emit(rocketData)
+
+        while self.stopEvent.is_set():
+            self.dataSignal.emit(rocketData)
+            self.dataSignal.emit("FLIGHTCTL: Restart app to try again")
+            time.sleep(3)
+            
 
     def transmit(self, message):
         self.ser.write(message.encode("utf-8"))  # noqa: E1101
