@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
         self.initNP()
         self.initFW()
         self.initSC()
-        
+
     # init methods below
     def initGUI(self):
         self.loginWindow = LoginWindow()
@@ -90,7 +90,7 @@ class MainWindow(QMainWindow):
         match self.status:
             case WindowStatus.INIT:
                 pass
-            
+
             case WindowStatus.LOGIN:
                 pass
 
