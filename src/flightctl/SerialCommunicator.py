@@ -48,7 +48,7 @@ class SerialCommunicator(QObject):
         try:
             self.ser = serial.Serial(serialPort, baudRate)
 
-        except serial.serialutil.PortNotOpenError:
+        except serial.serialutil.SerialException:
             rocketData = "FLIGHTCTL: ERROR: Serial Port Not Open!"
             self.dataSignal.emit(rocketData)
 
