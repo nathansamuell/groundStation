@@ -62,7 +62,6 @@ class SerialCommunicator(QObject):
             # attempt to collect five data collections (keeps our number of pyqt5 signals down)
             for i in range(5):
                 rocketData = []   # holds our list of five correctly picked data
-                rocketError = []  # holds any error messages. using a list plays nice with the data handler in MainWindow
                 try:
                     rocketPacket = self.ser.readline().decode("utf-8").rstrip()  # read from rocket
                     if rocketPacket == b'':  # empty string byte means no data was received before timeout
@@ -73,19 +72,18 @@ class SerialCommunicator(QObject):
                 except serial.serialutil.PortNotOpenError:
                     rocketPacket = "FLIGHTCTL: ERROR: Serial Port Not Open!"
                     self.stopEvent.set()
-                    self.dataSignal.emit(rocketPacket)
+                    self.dataSignal.emit([rocketPacket])
 
                 except AttributeError as e:
                     rocketPacket = "FLIGHTCTL: ERROR: " + str(e)
                     self.stopEvent.set()
-                    rocketError.append(rocketPacket)
-                    self.dataSignal.emit(rocketError)
+                    self.dataSignal.emit([rocketError])
 
             self.dataSignal.emit(rocketData)  # if no errors occur then send the list!
 
         while self.stopEvent.is_set():
             self.dataSignal.emit(rocketData)
-            self.dataSignal.emit("FLIGHTCTL: Restart app to try again")
+            self.dataSignal.emit(["FLIGHTCTL: Restart app to try again"])
             time.sleep(3)
             
 
