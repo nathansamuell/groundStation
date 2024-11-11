@@ -45,7 +45,12 @@ class SerialCommunicator(QObject):
         super().__init__()  # needed to inherit from any Q class
         serialPort = sp  # noqa: F841
         baudRate = br  # noqa: F841
-        self.ser = serial.Serial(serialPort, baudRate)
+        try:
+            self.ser = serial.Serial(serialPort, baudRate)
+
+        except serial.serialutil.PortNotOpenError:
+            rocketData = "FLIGHTCTL: ERROR: Serial Port Not Open!"
+            self.dataSignal.emit(rocketData)
 
         self.stopEvent = threading.Event()
 
