@@ -58,7 +58,7 @@ class SerialCommunicator(QObject):
     def read(self):
         # while the thread is running,
         while not self.stopEvent.is_set():
-            
+
             # attempt to collect five data collections (keeps our number of pyqt5 signals down)
             for i in range(5):
                 rocketData = []   # holds our list of five correctly picked data
@@ -81,11 +81,10 @@ class SerialCommunicator(QObject):
 
             self.dataSignal.emit(rocketData)  # if no errors occur then send the list!
 
-        while self.stopEvent.is_set():
+        if self.stopEvent.is_set():
             self.dataSignal.emit(rocketData)
             self.dataSignal.emit(["FLIGHTCTL: Restart app to try again"])
-            time.sleep(3)
-            
+
 
     def transmit(self, message):
         self.ser.write(message.encode("utf-8"))  # noqa: E1101
