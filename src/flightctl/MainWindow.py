@@ -88,6 +88,9 @@ class MainWindow(QMainWindow):
     def dataHandler(self, data):
         # send data to each view 
         match self.status:
+            case WindowStatus.INIT:
+                pass
+            
             case WindowStatus.LOGIN:
                 pass
 
