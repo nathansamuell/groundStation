@@ -142,4 +142,5 @@ class RawText(QTextBrowser):
     #     self.iterations += 1
 
     def appendText(self, message):
-        self.append(message)
+        for i in range(len(message)):
+            self.append(message[i])
