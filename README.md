@@ -1,34 +1,19 @@
-# groundStation
+# FlightControl
 
-A repository for AIAA-UH Ground station code.
+FlightControl is an open-source rocket monitoring/management tool created by [Nathan Samuell](https://github.com/nathansamuell) in conjunction with [AIAA-UH](https://aiaa-uh.com/) and Space City Rocketry for collegiate competition!
 
-<br><br>
+FlightControl is:
+- A monitoring tool
+- configurable!
+- batteries included
 
-## Installation
+FlightControl is not:
+- A tool to steer or control flying objects
+- Extensible (yet)
+- A drop-in tool for everyone's system
 
-### Install source code
+Check the documentation site for more information!
 
-`git clone https://github.com/nathansamuell/groundStation/`
+## Contributing
 
-_If installing on Development Machine_
-
-Setup and Start Python Virtual Environment:
-
-`python3 -m venv venv`
-`source bin/venv/activate`
-
-Install Project + Dependencies
-
-`cd groundStation`
-`pip3 install -e .`
-
-If installing on Running Machine
-
-Install source code
-
-`git clone https://github.com/nathansamuell/groundStation/`
-
-Install Project Dependencies
-
-`cd groundStation`
-`pip3 install .`
+Team members of AIAA UH should inquire in the Discord. If you are not a member of the team but would like to contribute, feel free to email [Nathan](www.github.com/nathansamuell) at nathansamuell@duck.com!

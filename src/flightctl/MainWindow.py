@@ -11,7 +11,7 @@
 # imports
 from enum import Enum
 
-from groundStation.Views import LoginWindow, RawText
+from flightctl.Views import LoginWindow, RawText
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QStackedLayout, QWidget
 

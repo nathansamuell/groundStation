@@ -11,7 +11,7 @@
 from unittest.mock import patch
 
 import pytest
-from groundStation.Numpad import Numpad  # noqa: E402
+from flightctl.Numpad import Numpad  # noqa: E402
 from PyQt5.QtCore import Qt  # noqa: E402
 from PyQt5.QtTest import QSignalSpy, QTest  # noqa: E402
 from PyQt5.QtWidgets import QApplication, QPushButton  # noqa: E402

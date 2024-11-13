@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "groundStation"
-version = "0.1.0"
+name = "flightctl"
+dynamic = ["version"]
 dependencies = ["python-dotenv", "pyserial", "pytest"]
 authors = [{ name = "Nathan Samuell", email = "nathansamuell@duck.com" }]
 readme = "README.md"
@@ -17,7 +17,6 @@ classifiers = [
     "Development Status :: 2 - Pre-Alpha",
 ]
 description = "Rocket Monitoring reimagined"
-# dynamic = ["version"]
 
 [tool.hatch.envs]
 test = {inherit = true, dependencies = ["pytest", "PyQt5"]}
@@ -27,7 +26,7 @@ inherit = true
 dependencies = ["PyQt5", "black", "isort"]
 
 [tool.hatch.envs.dev.scripts]
-groundStation = "python3 -m groundStation"
+flightctl = "python3 -m flightctl"
 # cleanup = "isort . && black ."
 
 [tool.setuptools]
@@ -38,7 +37,8 @@ include-package-data = true
 aiaa_logo = ["cropped-aiaaweblogo-2.png"]
 
 
-[tool.hatch]
+[tool.hatch.version]
+path = "src/flightctl/__init__.py"
 
 [tool.isort]
 profile = "black"
@@ -51,5 +51,5 @@ line-length = 88
 skip-string-normalization = false
 
 [project.urls]
-Homepage = "https://nathansamuell.github.io/groundStation/"
-Issues = "https://github.com/nathansamuell/groundStation/issues"
+Homepage = "https://nathansamuell.github.io/FlightControl/"
+Issues = "https://github.com/nathansamuell/FlightControl/issues"
