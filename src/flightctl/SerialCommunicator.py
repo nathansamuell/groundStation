@@ -32,10 +32,9 @@
 
 
 # imports
-import time
 import threading
-import serial  # noqa: F401
 
+import serial  # noqa: F401
 from PyQt5.QtCore import QObject, pyqtSignal
 
 
@@ -61,11 +60,17 @@ class SerialCommunicator(QObject):
 
             # attempt to collect five data collections (keeps our number of pyqt5 signals down)
             for i in range(5):
-                rocketData = []   # holds our list of five correctly picked data
+                rocketData = []  # holds our list of five correctly picked data
                 try:
-                    rocketPacket = self.ser.readline().decode("utf-8").rstrip()  # read from rocket
-                    if rocketPacket == b'':  # empty string byte means no data was received before timeout
-                        rocketPacket = "no data"  # FIXME: we need a standardized signal for this
+                    rocketPacket = (
+                        self.ser.readline().decode("utf-8").rstrip()
+                    )  # read from rocket
+                    if (
+                        rocketPacket == b""
+                    ):  # empty string byte means no data was received before timeout
+                        rocketPacket = (
+                            "no data"  # FIXME: we need a standardized signal for this
+                        )
 
                     rocketData.append(rocketPacket)  # add to list to send to app!
 
@@ -77,14 +82,13 @@ class SerialCommunicator(QObject):
                 except AttributeError as e:
                     rocketPacket = "FLIGHTCTL: ERROR: " + str(e)
                     self.stopEvent.set()
-                    self.dataSignal.emit([rocketError])
+                    self.dataSignal.emit([rocketPacket])
 
             self.dataSignal.emit(rocketData)  # if no errors occur then send the list!
 
         if self.stopEvent.is_set():
             self.dataSignal.emit(rocketData)
             self.dataSignal.emit(["FLIGHTCTL: Restart app to try again"])
-
 
     def transmit(self, message):
         self.ser.write(message.encode("utf-8"))  # noqa: E1101

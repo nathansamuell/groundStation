@@ -10,14 +10,12 @@
 
 # imports
 import os
-
 from enum import Enum
-from dotenv import load_dotenv
 
-from flightctl.Views import LoginWindow, RawText
+from dotenv import load_dotenv
 from flightctl.FileWriter import FileWriter
-from flightctl.Numpad import Numpad
 from flightctl.SerialCommunicator import SerialCommunicator
+from flightctl.Views import LoginWindow, RawText
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QStackedLayout, QWidget
 
@@ -66,8 +64,10 @@ class MainWindow(QMainWindow):
         self.loginWindow.numpad.loginFailure.connect(self.loginFailure)
 
     def initFW(self):  # sets up FileWriter!
-        self.fw = FileWriter()
+        # TODO: add file output name/path capabilities in .env file
+        # TODO: check issue #37 for more info
 
+        self.fw = FileWriter()
 
     def initSC(self):  # sets up SerialCommunicator!
         # set up port
@@ -80,31 +80,26 @@ class MainWindow(QMainWindow):
             port = os.getenv("SERIAL_PORT")
             self.sc = SerialCommunicator(port, 9600)
 
-        # set up data signal
+        # set up data signal/start the communicator
         self.sc.dataSignal.connect(self.dataHandler)
         self.sc.start()
 
     # signal update handlers below
     def dataHandler(self, data):
-        # send data to each view 
+        # send data to each view
         match self.status:
-            case WindowStatus.INIT:
+            case WindowStatus.INIT:  # no data on this view
                 pass
 
-            case WindowStatus.LOGIN:
+            case WindowStatus.LOGIN:  # or this view
                 pass
 
             case WindowStatus.RAW_TEXT:
                 self.rawText.appendText(data)
 
-        #FIXME need to add file writing capability, code below doesn't work
-        # self.fw.addToFile(
-        #     str(data)  # noqa: E128
-        #     + "\n"
-        # )  # noqa: E124
+        # write out our data regardless of view to file
         for element in data:
             self.fw.addToFile(element + "\n")
-
 
     def updateStatus(self, status):
         if status == WindowStatus.RAW_TEXT:
@@ -127,7 +122,9 @@ class MainWindow(QMainWindow):
         self.loginWindow.enterPinText.setText("Incorrect Pin--Try Again: ")
 
     # ui update handler
-    def keyPressEvent(self, event):  # built in to pyqt5, allows us to bind keys to operations.
+    def keyPressEvent(
+        self, event
+    ):  # built in to pyqt5, allows us to bind keys to operations.
         if event.key() == Qt.Key_1:
             self.statusSignal.emit(WindowStatus.DEFAULT)
 
@@ -138,12 +135,12 @@ class MainWindow(QMainWindow):
             self.statusSignal.emit(WindowStatus.RAW_TEXT)
 
         elif event.key() == Qt.Key_4:
-            self.statusSignal.emit(Window.FC_STATUS)
+            self.statusSignal.emit(WindowStatus.FC_STATUS)
 
         elif event.key() == Qt.Key_Escape:
             # stops the listening thread and closes the app
-            if self.status == WindowStatus.RAW_TEXT:
-                self.sc.stop()
-                self.fw.writeEOF("outputName")
-
+            self.fw.writeEOF(
+                "outputName"
+            )  # TODO: check initFW() method or issue #37 for more info
+            self.sc.stop()
             self.close()
