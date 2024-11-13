@@ -27,6 +27,7 @@ dependencies = ["PyQt5", "black", "isort"]
 
 [tool.hatch.envs.dev.scripts]
 flightctl = "python3 -m flightctl"
+rocket = "python3 tests/RocketSimulator.py"
 # cleanup = "isort . && black ."
 
 [tool.setuptools]

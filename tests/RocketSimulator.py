@@ -23,8 +23,9 @@ import serial
 from dotenv import load_dotenv
 
 # load environment variables, set serial port to MOCK_SERIAL
-load_dotenv("../src/groundStation/.env")
+load_dotenv(".env")
 mockPort = os.getenv("MOCK_SPORT_TEST")
+print(mockPort)
 rocketSerial = serial.Serial(mockPort, 9600)
 time.sleep(2)  # wait to make sure connection is established
 
