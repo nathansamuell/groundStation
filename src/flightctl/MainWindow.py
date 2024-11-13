@@ -102,6 +102,8 @@ class MainWindow(QMainWindow):
         #     str(data)  # noqa: E128
         #     + "\n"
         # )  # noqa: E124
+        for element in data:
+            self.fw.addToFile(element + "\n")
 
 
     def updateStatus(self, status):
