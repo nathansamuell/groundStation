@@ -2,17 +2,7 @@
 
 FlightControl is an open-source rocket monitoring/management tool created by [Nathan Samuell](https://github.com/nathansamuell) in conjunction with [AIAA-UH](https://aiaa-uh.com/) and Space City Rocketry for collegiate competition!
 
-FlightControl is:
-- A monitoring tool
-- configurable!
-- batteries included
-
-FlightControl is not:
-- A tool to steer or control flying objects
-- Extensible (yet)
-- A drop-in tool for everyone's system
-
-Check the documentation site for more information!
+~~Check the documentation site for more information!~~
 
 ## Contributing
 
